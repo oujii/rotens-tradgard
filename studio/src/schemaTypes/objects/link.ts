@@ -40,6 +40,17 @@ export const link = defineType({
           if (parent?.linkType === 'href' && !value) {
             return 'URL is required when Link Type is URL'
           }
+          if (value && typeof value === 'string') {
+            const isAllowed =
+              value.startsWith('/') ||
+              value.startsWith('http://') ||
+              value.startsWith('https://') ||
+              value.startsWith('mailto:') ||
+              value.startsWith('tel:')
+            if (!isAllowed) {
+              return 'URL must start with /, http(s)://, mailto:, or tel:'
+            }
+          }
           return true
         }),
     }),

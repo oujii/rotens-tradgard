@@ -2,7 +2,7 @@ import './globals.css'
 
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
-import {Inter, IBM_Plex_Mono} from 'next/font/google'
+import {Inter, IBM_Plex_Mono, Playfair_Display} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {toPlainText} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
@@ -65,15 +65,20 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
+const playfair = Playfair_Display({
+  variable: '--font-playfair',
+  subsets: ['latin'],
+  display: 'swap',
+})
+
 export default async function RootLayout({children}: {children: React.ReactNode}) {
   const {isEnabled: isDraftMode} = await draftMode()
 
   return (
-    <html lang="en" className={`${inter.variable} ${ibmPlexMono.variable} bg-white text-black`}>
+    <html lang="en" className={`${inter.variable} ${ibmPlexMono.variable} ${playfair.variable} bg-stone-50 text-stone-900`}>
       <body>
         <section className="min-h-screen pt-24">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
-          <Toaster />
           {isDraftMode && (
             <>
               <DraftModeToast />
@@ -87,6 +92,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
           <main className="">{children}</main>
           <Footer />
         </section>
+        <Toaster />
         <SpeedInsights />
       </body>
     </html>

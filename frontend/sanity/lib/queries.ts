@@ -1,34 +1,50 @@
 import {defineQuery} from 'next-sanity'
 
-export const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
-
-const postFields = /* groq */ `
-  _id,
-  "status": select(_originalId in path("drafts.**") => "draft", "published"),
-  "title": coalesce(title, "Untitled"),
-  "slug": slug.current,
-  excerpt,
-  coverImage,
-  "date": coalesce(date, _updatedAt),
-  "author": author->{firstName, lastName, picture},
-`
-
-const linkReference = /* groq */ `
-  _type == "link" => {
-    "page": page->slug.current,
-    "post": post->slug.current
+export const settingsQuery = defineQuery(`
+  *[_type == "settings"][0] {
+    ...,
+    "heroVideoUrl": heroVideo.asset->url,
+    notices
   }
-`
+`)
 
-const linkFields = /* groq */ `
-  link {
-      ...,
-      ${linkReference}
-      }
-`
+export const eventsQuery = defineQuery(`
+  *[_type == "event"] | order(date asc) {
+    _id,
+    title,
+    slug,
+    date,
+    "image": image.asset->url,
+    bookingUrl
+  }
+`)
+
+export const eventQuery = defineQuery(`
+  *[_type == "event" && slug.current == $slug][0] {
+    _id,
+    title,
+    slug,
+    date,
+    price,
+    description,
+    "image": image.asset->url,
+    bookingUrl
+  }
+`)
+
+export const productsQuery = defineQuery(`
+  *[_type == "product"] | order(title asc) {
+    _id,
+    title,
+    price,
+    "image": image.asset->url,
+    stripeUrl,
+    isPreOrder
+  }
+`)
 
 export const getPageQuery = defineQuery(`
-  *[_type == 'page' && slug.current == $slug][0]{
+  *[_type == "page" && slug.current == $slug][0]{
     _id,
     _type,
     name,
@@ -39,63 +55,47 @@ export const getPageQuery = defineQuery(`
       ...,
       _type == "callToAction" => {
         ...,
-        button {
+        link {
           ...,
-          ${linkFields}
-        }
-      },
-      _type == "infoSection" => {
-        content[]{
-          ...,
-          markDefs[]{
+          _type == "link" => {
             ...,
-            ${linkReference}
+            "page": page->slug.current,
+            "post": post->slug.current
           }
         }
       },
-    },
-  }
-`)
-
-export const sitemapData = defineQuery(`
-  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {
-    "slug": slug.current,
-    _type,
-    _updatedAt,
-  }
-`)
-
-export const allPostsQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {
-    ${postFields}
-  }
-`)
-
-export const morePostsQuery = defineQuery(`
-  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
-    ${postFields}
-  }
-`)
-
-export const postQuery = defineQuery(`
-  *[_type == "post" && slug.current == $slug] [0] {
-    content[]{
-    ...,
-    markDefs[]{
-      ...,
-      ${linkReference}
+      _type == "infoSection" => {
+        ...
+      },
     }
-  },
-    ${postFields}
   }
-`)
-
-export const postPagesSlugs = defineQuery(`
-  *[_type == "post" && defined(slug.current)]
-  {"slug": slug.current}
 `)
 
 export const pagesSlugs = defineQuery(`
-  *[_type == "page" && defined(slug.current)]
-  {"slug": slug.current}
+  *[_type == "page" && defined(slug.current)]{
+    "slug": slug.current
+  }
+`)
+
+export const servicesPageQuery = defineQuery(`
+  *[_type == "servicesPage" && _id == "servicesPage"][0]{
+    _id,
+    title,
+    intro,
+    "items": items[]{
+      _key,
+      title,
+      description,
+      "imageUrl": image.asset->url,
+      buttonText,
+      buttonLink{
+        ...,
+        _type == "link" => {
+          ...,
+          "page": page->slug.current,
+          "post": post->slug.current
+        }
+      }
+    }
+  }
 `)
