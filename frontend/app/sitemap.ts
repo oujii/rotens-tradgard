@@ -23,19 +23,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   })
 
   if (allPostsAndPages != null && allPostsAndPages.data.length != 0) {
-    let priority: number
-    let changeFrequency:
-      | 'monthly'
-      | 'always'
-      | 'hourly'
-      | 'daily'
-      | 'weekly'
-      | 'yearly'
-      | 'never'
-      | undefined
-    let url: string
-
     for (const p of allPostsAndPages.data) {
+      let priority: number | undefined
+      let changeFrequency:
+        | 'monthly'
+        | 'always'
+        | 'hourly'
+        | 'daily'
+        | 'weekly'
+        | 'yearly'
+        | 'never'
+        | undefined
+      let url: string | undefined
+
       switch (p._type) {
         case 'page':
           priority = 0.8
@@ -48,6 +48,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           url = `${domain}/posts/${p.slug}`
           break
       }
+
+      if (!url) continue
+
       sitemap.push({
         lastModified: p._updatedAt || new Date(),
         priority,

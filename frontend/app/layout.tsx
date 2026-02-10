@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${title}`,
       default: title,
     },
-    description: toPlainText(description),
+    description: typeof description === 'string' ? description : toPlainText(description),
     openGraph: {
       images: ogImage ? [ogImage] : [],
     },

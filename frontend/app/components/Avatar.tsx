@@ -3,8 +3,8 @@ import DateComponent from '@/app/components/Date'
 
 type Props = {
   person: {
-    firstName: string | null
-    lastName: string | null
+    firstName?: string | null
+    lastName?: string | null
     picture?: {
       asset?: {_ref: string}
       hotspot?: {x: number; y: number}
