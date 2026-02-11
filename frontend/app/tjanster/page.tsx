@@ -144,10 +144,11 @@ export default async function TjansterPage() {
                             {summaryText}
                           </p>
                         )}
+                        <span className="mt-3 inline-flex items-center gap-2 text-sm uppercase tracking-widest text-brand transition-colors group-open:text-brand-dark">
+                          Läs mer
+                          <span className="text-lg leading-none">+</span>
+                        </span>
                       </div>
-                      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
-                        +
-                      </span>
                     </div>
                   </div>
                 </summary>
