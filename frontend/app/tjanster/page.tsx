@@ -101,7 +101,7 @@ export default async function TjansterPage() {
       </div>
 
       <div className="container mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service: any) => {
             const summaryText = service.description
             const detailText = service.details || service.description
