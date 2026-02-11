@@ -314,11 +314,6 @@ export type Settings = {
     media?: unknown
     _type: 'file'
   }
-  notices?: Array<{
-    title: string
-    link?: string
-    _key: string
-  }>
   openingHours?: {
     weekdays?: string
     saturday?: string
@@ -509,6 +504,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }

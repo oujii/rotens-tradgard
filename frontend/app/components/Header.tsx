@@ -20,13 +20,13 @@ export default function Header() {
         <nav className="hidden lg:block">
           <ul className="flex items-center gap-8 text-stone-600 font-medium text-xs tracking-widest uppercase">
             <li>
-              <Link href="/butik" className="hover:text-brand transition-colors">Butik</Link>
+              <Link href="/butik" className="hover:text-brand transition-colors">Webbutik</Link>
             </li>
             <li>
               <Link href="/tjanster" className="hover:text-brand transition-colors">Tjänster</Link>
             </li>
             <li>
-              <Link href="/besok-oss" className="hover:text-brand transition-colors">Besök oss</Link>
+              <Link href="/om-oss" className="hover:text-brand transition-colors">Om oss</Link>
             </li>
             <li>
               <Link href="/kontakt" className="px-6 py-2.5 bg-brand-dark text-white rounded-full hover:bg-brand transition-all shadow-sm active:scale-95 font-bold tracking-widest">

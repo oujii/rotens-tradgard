@@ -22,7 +22,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Besök oss',
-      href: {linkType: 'href', href: '/besok-oss'},
+      href: {linkType: 'href', href: '/om-oss'},
     },
     {
       title: 'Trädgårdstjänster',

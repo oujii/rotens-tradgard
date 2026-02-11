@@ -1,18 +1,5 @@
 // Denna fil simulerar datan som senare kommer från Sanity CMS
 
-export const mockSettings = {
-  heroVideoUrl: "/video.mp4", // Din lokala video
-  openingHours: {
-    weekdays: "10 - 18",
-    saturday: "10 - 15",
-    sunday: "Stängt"
-  },
-  notices: [
-    { _key: "n1", title: "Butiken öppnar åter 4/2!", link: "#" },
-    { _key: "n2", title: "Glöm inte boka tid för trädgårdsrådgivning", link: "/workshops" }
-  ]
-};
-
 export const mockEvents = [
   {
     id: "1",

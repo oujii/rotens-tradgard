@@ -314,11 +314,6 @@ export type Settings = {
     media?: unknown
     _type: 'file'
   }
-  notices?: Array<{
-    title: string
-    link?: string
-    _key: string
-  }>
   openingHours?: {
     weekdays?: string
     saturday?: string
@@ -509,6 +504,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette
   lqip?: string
   blurHash?: string
+  thumbHash?: string
   hasAlpha?: boolean
   isOpaque?: boolean
 }
@@ -620,7 +616,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    ...,    "heroVideoUrl": heroVideo.asset->url,    notices  }
+// Query: *[_type == "settings"][0] {    ...,    "heroVideoUrl": heroVideo.asset->url  }
 export type SettingsQueryResult = {
   _id: string
   _type: 'settings'
@@ -633,11 +629,6 @@ export type SettingsQueryResult = {
     media?: unknown
     _type: 'file'
   }
-  notices: Array<{
-    title: string
-    link?: string
-    _key: string
-  }> | null
   openingHours?: {
     weekdays?: string
     saturday?: string
@@ -889,7 +880,7 @@ export type ServicesPageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "settings"][0] {\n    ...,\n    "heroVideoUrl": heroVideo.asset->url,\n    notices\n  }\n': SettingsQueryResult
+    '\n  *[_type == "settings"][0] {\n    ...,\n    "heroVideoUrl": heroVideo.asset->url\n  }\n': SettingsQueryResult
     '\n  *[_type == "event"] | order(date asc) {\n    _id,\n    title,\n    slug,\n    date,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventsQueryResult
     '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    price,\n    description,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventQueryResult
     '\n  *[_type == "product"] | order(title asc) {\n    _id,\n    title,\n    price,\n    "image": image.asset->url,\n    stripeUrl,\n    isPreOrder\n  }\n': ProductsQueryResult

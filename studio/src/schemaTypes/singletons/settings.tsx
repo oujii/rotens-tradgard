@@ -25,23 +25,6 @@ export const settings = defineType({
       },
     }),
 
-    // NOTICE BOARD
-    defineField({
-      name: 'notices',
-      title: 'Anslagstavlan (Just nu)',
-      description: 'Korta notiser som visas på startsidan, t.ex. "Öppnar 4/2".',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            defineField({name: 'title', title: 'Meddelande', type: 'string', validation: (rule) => rule.required()}),
-            defineField({name: 'link', title: 'Länk (Valfritt)', type: 'url'}),
-          ]
-        }
-      ]
-    }),
-
     // OPENING HOURS
     defineField({
       name: 'openingHours',

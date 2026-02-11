@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { settingsQuery } from '@/sanity/lib/queries'
 
-export default async function BesokOssPage() {
+export default async function OmOssPage() {
   const { data: settings } = await sanityFetch({ query: settingsQuery })
   
   const openingHours = settings?.openingHours || {
