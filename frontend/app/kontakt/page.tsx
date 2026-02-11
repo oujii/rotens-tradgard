@@ -5,18 +5,48 @@ import {useSearchParams} from 'next/navigation'
 
 type Status = 'idle' | 'loading' | 'success' | 'error'
 
+type CategoryOption = {
+  value: string
+  label: string
+}
+
+const CATEGORY_OPTIONS: CategoryOption[] = [
+  {value: 'allmant', label: 'Allmän fråga'},
+  {value: 'vaxtbestallning', label: 'Växtbeställning'},
+  {value: 'radgivning', label: 'Rådgivning'},
+  {value: 'beskaring-skotsel', label: 'Beskäring & Skötsel'},
+  {value: 'binderier', label: 'Binderier – Bröllop, begravning, fest, övrigt'},
+  {value: 'workshop-forelasningar', label: 'Workshop & föreläsningar'},
+  {value: 'fest-konferens', label: 'Fest & Konferens'},
+]
+
+const CATEGORY_VALUES = new Set(CATEGORY_OPTIONS.map((option) => option.value))
+
 function ContactForm() {
   const searchParams = useSearchParams()
-  const initialCategory = searchParams.get('val') || 'allmant'
+  const rawCategory = searchParams.get('val')
+  const initialCategory =
+    rawCategory && CATEGORY_VALUES.has(rawCategory) ? rawCategory : 'allmant'
 
   const [category, setCategory] = useState(initialCategory)
   const [status, setStatus] = useState<Status>('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
+  const isPlantOrder = category === 'vaxtbestallning'
+  const isConsulting = category === 'radgivning'
+  const isPruning = category === 'beskaring-skotsel'
+  const isBinderi = category === 'binderier'
+  const isWorkshop = category === 'workshop-forelasningar'
+  const isEvent = category === 'fest-konferens'
+
   // Update category if URL changes
   useEffect(() => {
     const val = searchParams.get('val')
-    if (val) setCategory(val)
+    if (val && CATEGORY_VALUES.has(val)) {
+      setCategory(val)
+      return
+    }
+    if (!val) setCategory('allmant')
   }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,6 +56,7 @@ function ContactForm() {
 
     const form = e.currentTarget
     const formData = new FormData(form)
+    const selectedCategory = CATEGORY_OPTIONS.find((option) => option.value === category)
 
     const payload = {
       name: String(formData.get('name') || '').trim(),
@@ -33,10 +64,14 @@ function ContactForm() {
       phone: String(formData.get('phone') || '').trim(),
       company: String(formData.get('company') || '').trim(),
       message: String(formData.get('message') || '').trim(),
-      category,
+      category: selectedCategory?.label || category,
       address: String(formData.get('address') || '').trim(),
       eventDate: String(formData.get('eventDate') || '').trim(),
       binderiType: String(formData.get('binderiType') || '').trim(),
+      plantRequest: String(formData.get('plantRequest') || '').trim(),
+      pickupDate: String(formData.get('pickupDate') || '').trim(),
+      workshopTopic: String(formData.get('workshopTopic') || '').trim(),
+      attendees: String(formData.get('attendees') || '').trim(),
       website: String(formData.get('website') || '').trim(),
     }
 
@@ -102,10 +137,11 @@ function ContactForm() {
           onChange={(e) => setCategory(e.target.value)}
           className="w-full border-b-2 border-stone-100 py-3 focus:border-brand outline-none transition-colors text-lg bg-transparent"
         >
-          <option value="allmant">Allmän fråga</option>
-          <option value="beskarning">Beskärningshjälp</option>
-          <option value="radgivning">Trädgårdsrådgivning</option>
-          <option value="binderier">Binderier (Bröllop/Begravning)</option>
+          {CATEGORY_OPTIONS.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -150,8 +186,31 @@ function ContactForm() {
         </div>
       </div>
 
+      {/* Conditional Fields: Växtbeställning */}
+      {isPlantOrder && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Vilka växter vill du beställa?</label>
+            <input
+              required
+              name="plantRequest"
+              type="text"
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Önskat datum för hämtning (valfritt)</label>
+            <input
+              name="pickupDate"
+              type="date"
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Conditional Fields: Address */}
-      {(category === 'beskarning' || category === 'radgivning') && (
+      {(isConsulting || isPruning) && (
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Adress (för hembesök)</label>
           <input
@@ -164,7 +223,7 @@ function ContactForm() {
       )}
 
       {/* Conditional Fields: Binderier */}
-      {category === 'binderier' && (
+      {isBinderi && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Datum för tillställning</label>
@@ -183,9 +242,66 @@ function ContactForm() {
             >
               <option>Bröllop</option>
               <option>Begravning</option>
-              <option>Fest/Event</option>
-              <option>Annat</option>
+              <option>Fest</option>
+              <option>Övrigt</option>
             </select>
+          </div>
+        </div>
+      )}
+
+      {/* Conditional Fields: Workshop & föreläsningar */}
+      {isWorkshop && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Vilken workshop eller föreläsning?</label>
+            <input
+              required
+              name="workshopTopic"
+              type="text"
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Önskat datum (valfritt)</label>
+            <input
+              name="eventDate"
+              type="date"
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Antal deltagare (valfritt)</label>
+            <input
+              name="attendees"
+              type="number"
+              min={1}
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Conditional Fields: Fest & Konferens */}
+      {isEvent && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Datum för tillställning</label>
+            <input
+              required
+              name="eventDate"
+              type="date"
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-widest font-bold text-stone-400">Antal personer</label>
+            <input
+              required
+              name="attendees"
+              type="number"
+              min={1}
+              className="w-full border-b-2 border-stone-100 py-2 focus:border-brand outline-none transition-colors"
+            />
           </div>
         </div>
       )}
@@ -193,7 +309,7 @@ function ContactForm() {
       {/* Message */}
       <div className="space-y-2">
         <label className="text-xs uppercase tracking-widest font-bold text-stone-400">
-          {category === 'beskarning' ? 'Berätta lite om dina träd (antal, sort)' : 'Ditt meddelande'}
+          {isPruning ? 'Berätta lite om dina träd (antal, sort)' : 'Ditt meddelande'}
         </label>
         <textarea
           required
@@ -234,8 +350,7 @@ export default function KontaktPage() {
         <div className="py-12 text-center">
           <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-4">Kontakta oss</h1>
           <p className="text-stone-600">
-            Har du frågor om våra växter, vill boka rådgivning eller beställa ett binderi? 
-            Fyll i formuläret så hör vi av oss!
+            Vill du beställa växter, rådgivning, binderier eller komma i kontakt med oss av annan anledning? Fyll i formuläret så hör vi av oss!
           </p>
         </div>
 

@@ -282,6 +282,7 @@ export type ServicesPage = {
   items?: Array<{
     title: string
     description?: string
+    details?: string
     image?: {
       asset?: SanityImageAssetReference
       media?: unknown
@@ -854,7 +855,7 @@ export type SitemapDataResult = Array<
 
 // Source: sanity/lib/queries.ts
 // Variable: servicesPageQuery
-// Query: *[_type == "servicesPage" && _id == "servicesPage"][0]{    _id,    title,    intro,    "items": items[]{      _key,      title,      description,      "imageUrl": image.asset->url,      buttonText,      buttonLink{        ...,        _type == "link" => {          ...,          "page": page->slug.current,          "post": post->slug.current        }      }    }  }
+// Query: *[_type == "servicesPage" && _id == "servicesPage"][0]{    _id,    title,    intro,    "items": items[]{      _key,      title,      description,      details,      "imageUrl": image.asset->url,      buttonText,      buttonLink{        ...,        _type == "link" => {          ...,          "page": page->slug.current,          "post": post->slug.current        }      }    }  }
 export type ServicesPageQueryResult = {
   _id: 'servicesPage'
   title: string
@@ -863,6 +864,7 @@ export type ServicesPageQueryResult = {
     _key: string
     title: string
     description: string | null
+    details: string | null
     imageUrl: string | null
     buttonText: string | null
     buttonLink: {
@@ -891,6 +893,6 @@ declare module '@sanity/client' {
     '\n  *[_type == "post" && _id != $skip] | order(date desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    date,\n    "author": author->{\n      firstName,\n      lastName,\n      picture\n    }\n  }\n': MorePostsQueryResult
     '\n  *[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    date,\n    content,\n    coverImage,\n    "author": author->{\n      firstName,\n      lastName,\n      picture\n    }\n  }\n': PostQueryResult
     '\n  *[_type in ["page", "post"] && defined(slug.current)]{\n    _type,\n    "slug": slug.current,\n    _updatedAt\n  }\n': SitemapDataResult
-    '\n  *[_type == "servicesPage" && _id == "servicesPage"][0]{\n    _id,\n    title,\n    intro,\n    "items": items[]{\n      _key,\n      title,\n      description,\n      "imageUrl": image.asset->url,\n      buttonText,\n      buttonLink{\n        ...,\n        _type == "link" => {\n          ...,\n          "page": page->slug.current,\n          "post": post->slug.current\n        }\n      }\n    }\n  }\n': ServicesPageQueryResult
+    '\n  *[_type == "servicesPage" && _id == "servicesPage"][0]{\n    _id,\n    title,\n    intro,\n    "items": items[]{\n      _key,\n      title,\n      description,\n      details,\n      "imageUrl": image.asset->url,\n      buttonText,\n      buttonLink{\n        ...,\n        _type == "link" => {\n          ...,\n          "page": page->slug.current,\n          "post": post->slug.current\n        }\n      }\n    }\n  }\n': ServicesPageQueryResult
   }
 }

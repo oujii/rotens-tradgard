@@ -9,6 +9,10 @@ type ContactPayload = {
   eventDate?: string
   address?: string
   binderiType?: string
+  plantRequest?: string
+  pickupDate?: string
+  workshopTopic?: string
+  attendees?: string
   phone?: string
   company?: string
 }
@@ -60,9 +64,13 @@ export async function POST(request: Request) {
       `E-post: ${email}`,
       payload.phone ? `Telefon: ${payload.phone}` : null,
       payload.category ? `Ärende: ${payload.category}` : null,
+      payload.plantRequest ? `Växtbeställning: ${payload.plantRequest}` : null,
+      payload.pickupDate ? `Önskat datum för hämtning: ${payload.pickupDate}` : null,
       payload.address ? `Adress: ${payload.address}` : null,
       payload.eventDate ? `Datum: ${payload.eventDate}` : null,
       payload.binderiType ? `Typ av binderi: ${payload.binderiType}` : null,
+      payload.workshopTopic ? `Workshop/föreläsning: ${payload.workshopTopic}` : null,
+      payload.attendees ? `Antal personer/deltagare: ${payload.attendees}` : null,
       payload.company ? `Företag: ${payload.company}` : null,
       '',
       'Meddelande:',

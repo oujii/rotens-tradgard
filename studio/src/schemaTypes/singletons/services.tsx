@@ -41,6 +41,12 @@ export const servicesPage = defineType({
               rows: 3,
             }),
             defineField({
+              name: 'details',
+              title: 'Detaljerad text',
+              type: 'text',
+              rows: 5,
+            }),
+            defineField({
               name: 'image',
               title: 'Bild',
               type: 'image',

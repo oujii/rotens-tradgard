@@ -282,6 +282,7 @@ export type ServicesPage = {
   items?: Array<{
     title: string
     description?: string
+    details?: string
     image?: {
       asset?: SanityImageAssetReference
       media?: unknown

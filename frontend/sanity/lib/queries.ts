@@ -146,6 +146,7 @@ export const servicesPageQuery = defineQuery(`
       _key,
       title,
       description,
+      details,
       "imageUrl": image.asset->url,
       buttonText,
       buttonLink{
