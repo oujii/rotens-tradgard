@@ -111,43 +111,45 @@ export default async function TjansterPage() {
                 key={service.key || service.title}
                 className="group bg-white border border-stone-200 rounded-sm shadow-sm open:shadow-md transition-shadow duration-300"
               >
-                <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6 [&::-webkit-details-marker]:hidden">
-                  <div className="flex items-start gap-4">
-                    <div className="relative h-20 w-24 shrink-0 overflow-hidden bg-stone-100 rounded-sm">
+                <summary className="cursor-pointer list-none px-6 py-5 [&::-webkit-details-marker]:hidden">
+                  <div className="space-y-4">
+                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-100 rounded-sm">
                       {service.image ? (
                         <Image
                           src={service.image}
                           alt={service.title}
                           fill
                           className="object-cover"
-                          sizes="96px"
+                          sizes="(max-width: 768px) 100vw, 480px"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-3xl">
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-4xl">
                           ✿
                         </div>
                       )}
                     </div>
-                    <div>
-                      <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
-                      {summaryText && (
-                        <p
-                          className="text-stone-600 leading-relaxed"
-                          style={{
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                          }}
-                        >
-                          {summaryText}
-                        </p>
-                      )}
+                    <div className="flex items-start justify-between gap-6">
+                      <div>
+                        <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
+                        {summaryText && (
+                          <p
+                            className="text-stone-600 leading-relaxed"
+                            style={{
+                              display: '-webkit-box',
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: 'vertical',
+                              overflow: 'hidden',
+                            }}
+                          >
+                            {summaryText}
+                          </p>
+                        )}
+                      </div>
+                      <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
+                        +
+                      </span>
                     </div>
                   </div>
-                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
-                    +
-                  </span>
                 </summary>
                 <div className="px-6 pb-6 pt-4 border-t border-stone-100">
                   <div className="space-y-4">
