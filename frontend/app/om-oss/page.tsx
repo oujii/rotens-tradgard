@@ -41,7 +41,7 @@ export default async function OmOssPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {/* Opening Hours */}
           <div className="bg-white p-8 shadow-sm rounded-sm border-t-4 border-brand">
-            <h3 className="text-xl font-serif text-brand-dark mb-4 uppercase tracking-wider text-sm font-bold">Öppettider</h3>
+            <h3 className="text-xl font-serif text-brand-dark mb-4 tracking-wider text-sm font-bold">Öppettider</h3>
             <ul className="space-y-2 text-stone-600">
               <li className="flex justify-between"><span>Vardagar</span> <span className="font-bold text-brand-dark">{openingHours.weekdays}</span></li>
               <li className="flex justify-between"><span>Lördag</span> <span className="font-bold text-brand-dark">{openingHours.saturday}</span></li>
@@ -51,7 +51,7 @@ export default async function OmOssPage() {
 
           {/* Contact */}
           <div className="bg-white p-8 shadow-sm rounded-sm border-t-4 border-brand-light">
-            <h3 className="text-xl font-serif text-brand-dark mb-4 uppercase tracking-wider text-sm font-bold">Kontakt</h3>
+            <h3 className="text-xl font-serif text-brand-dark mb-4 tracking-wider text-sm font-bold">Kontakt</h3>
             <div className="space-y-2 text-stone-600">
               <p className="font-bold text-brand-dark">{contactInfo.phone}</p>
               <p>{contactInfo.email}</p>
@@ -60,7 +60,7 @@ export default async function OmOssPage() {
 
           {/* Address */}
           <div className="bg-white p-8 shadow-sm rounded-sm border-t-4 border-accent">
-            <h3 className="text-xl font-serif text-brand-dark mb-4 uppercase tracking-wider text-sm font-bold">Adress</h3>
+            <h3 className="text-xl font-serif text-brand-dark mb-4 tracking-wider text-sm font-bold">Adress</h3>
             <div className="space-y-2 text-stone-600">
               <p className="font-bold text-brand-dark">{contactInfo.address}</p>
               <p className="text-sm">Mellan Falun och Rättvik.</p>

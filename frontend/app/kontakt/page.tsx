@@ -348,7 +348,7 @@ export default function KontaktPage() {
     <div className="pt-24 min-h-screen bg-stone-50 pb-20">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="py-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-4">Kontakta oss</h1>
+          <h1 className="text-4xl md:text-6xl font-serif text-brand-dark mb-4">Kontakta oss</h1>
           <p className="text-stone-600">
             Vill du beställa växter, rådgivning, binderier eller komma i kontakt med oss av annan anledning? Fyll i formuläret så hör vi av oss!
           </p>

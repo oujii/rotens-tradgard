@@ -10,7 +10,7 @@ export default async function ButikPage() {
     <div className="pt-24 min-h-screen bg-stone-50">
       <div className="bg-brand-dark text-white py-16">
         <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-5xl font-serif mb-4 text-white">Webbutik och förbokning</h1>
+          <h1 className="text-4xl md:text-6xl font-serif mb-4 text-white">Webbutik och förbokning</h1>
           <p className="text-brand-accent text-lg font-light max-w-2xl mx-auto">
             Här kan du beställa blombud och förboka växter till din trädgård. Vi rådger gärna kring växtval som kan passa just hos dig.
           </p>

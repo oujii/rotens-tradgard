@@ -103,8 +103,8 @@ export default async function TjansterPage() {
       <div className="container mx-auto px-6 py-16">
         <div className="space-y-4">
           {services.map((service: any) => {
+            const summaryText = service.description
             const detailText = service.details || service.description
-            const showSummaryDescription = Boolean(service.details && service.description)
 
             return (
               <details
@@ -112,46 +112,56 @@ export default async function TjansterPage() {
                 className="group bg-white border border-stone-200 rounded-sm shadow-sm open:shadow-md transition-shadow duration-300"
               >
                 <summary className="cursor-pointer list-none px-6 py-5 flex items-start justify-between gap-6 [&::-webkit-details-marker]:hidden">
-                  <div>
-                    <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
-                    {showSummaryDescription && (
-                      <p className="text-stone-600 leading-relaxed">{service.description}</p>
-                    )}
-                  </div>
-                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <div className="px-6 pb-6 pt-4 border-t border-stone-100">
-                  <div className="grid grid-cols-1 md:grid-cols-[220px,1fr] gap-6 items-start">
-                    <div className="relative aspect-[4/3] w-full bg-stone-100">
+                  <div className="flex items-start gap-4">
+                    <div className="relative h-20 w-24 shrink-0 overflow-hidden bg-stone-100 rounded-sm">
                       {service.image ? (
                         <Image
                           src={service.image}
                           alt={service.title}
                           fill
                           className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 220px"
+                          sizes="96px"
                         />
                       ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-5xl">
+                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-3xl">
                           ✿
                         </div>
                       )}
                     </div>
-                    <div className="space-y-4">
-                      {detailText && (
-                        <p className="text-stone-600 leading-relaxed">{detailText}</p>
-                      )}
-                      {service.ctaLabel && service.href && (
-                        <ResolvedLink
-                          link={service.href}
-                          className="inline-block px-6 py-2.5 bg-brand text-white text-xs uppercase tracking-widest font-semibold hover:bg-brand-dark transition-colors"
+                    <div>
+                      <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
+                      {summaryText && (
+                        <p
+                          className="text-stone-600 leading-relaxed"
+                          style={{
+                            display: '-webkit-box',
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                          }}
                         >
-                          {service.ctaLabel}
-                        </ResolvedLink>
+                          {summaryText}
+                        </p>
                       )}
                     </div>
+                  </div>
+                  <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
+                    +
+                  </span>
+                </summary>
+                <div className="px-6 pb-6 pt-4 border-t border-stone-100">
+                  <div className="space-y-4">
+                    {detailText && (
+                      <p className="text-stone-600 leading-relaxed">{detailText}</p>
+                    )}
+                    {service.ctaLabel && service.href && (
+                      <ResolvedLink
+                        link={service.href}
+                        className="inline-block px-6 py-2.5 bg-brand text-white text-xs uppercase tracking-widest font-semibold hover:bg-brand-dark transition-colors"
+                      >
+                        {service.ctaLabel}
+                      </ResolvedLink>
+                    )}
                   </div>
                 </div>
               </details>
