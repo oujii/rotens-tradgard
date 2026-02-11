@@ -101,7 +101,7 @@ export default async function TjansterPage() {
       </div>
 
       <div className="container mx-auto px-6 py-16">
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {services.map((service: any) => {
             const summaryText = service.description
             const detailText = service.details || service.description
@@ -128,8 +128,8 @@ export default async function TjansterPage() {
                         </div>
                       )}
                     </div>
-                    <div className="flex items-start justify-between gap-6">
-                      <div>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="min-w-0">
                         <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
                         {summaryText && (
                           <p
@@ -145,7 +145,7 @@ export default async function TjansterPage() {
                           </p>
                         )}
                       </div>
-                      <span className="mt-1 flex h-10 w-10 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
+                      <span className="mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-stone-200 text-stone-500 transition-transform duration-300 group-open:rotate-45">
                         +
                       </span>
                     </div>
