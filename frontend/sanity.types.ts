@@ -761,6 +761,107 @@ export type PagesSlugsResult = Array<{
 }>
 
 // Source: sanity/lib/queries.ts
+// Variable: postPagesSlugs
+// Query: *[_type == "post" && defined(slug.current)]{    "slug": slug.current  }
+export type PostPagesSlugsResult = Array<{
+  slug: string
+}>
+
+// Source: sanity/lib/queries.ts
+// Variable: allPostsQuery
+// Query: *[_type == "post"] | order(date desc) {    _id,    title,    "slug": slug.current,    excerpt,    date,    "author": author->{      firstName,      lastName,      picture    }  }
+export type AllPostsQueryResult = Array<{
+  _id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  date: string | null
+  author: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  } | null
+}>
+
+// Source: sanity/lib/queries.ts
+// Variable: morePostsQuery
+// Query: *[_type == "post" && _id != $skip] | order(date desc) [0...$limit] {    _id,    title,    "slug": slug.current,    excerpt,    date,    "author": author->{      firstName,      lastName,      picture    }  }
+export type MorePostsQueryResult = Array<{
+  _id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  date: string | null
+  author: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  } | null
+}>
+
+// Source: sanity/lib/queries.ts
+// Variable: postQuery
+// Query: *[_type == "post" && slug.current == $slug][0]{    _id,    title,    "slug": slug.current,    excerpt,    date,    content,    coverImage,    "author": author->{      firstName,      lastName,      picture    }  }
+export type PostQueryResult = {
+  _id: string
+  title: string
+  slug: string
+  excerpt: string | null
+  date: string | null
+  content: BlockContent | null
+  coverImage: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  author: {
+    firstName: string
+    lastName: string
+    picture: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    }
+  } | null
+} | null
+
+// Source: sanity/lib/queries.ts
+// Variable: sitemapData
+// Query: *[_type in ["page", "post"] && defined(slug.current)]{    _type,    "slug": slug.current,    _updatedAt  }
+export type SitemapDataResult = Array<
+  | {
+      _type: 'page'
+      slug: string
+      _updatedAt: string
+    }
+  | {
+      _type: 'post'
+      slug: string
+      _updatedAt: string
+    }
+>
+
+// Source: sanity/lib/queries.ts
 // Variable: servicesPageQuery
 // Query: *[_type == "servicesPage" && _id == "servicesPage"][0]{    _id,    title,    intro,    "items": items[]{      _key,      title,      description,      "imageUrl": image.asset->url,      buttonText,      buttonLink{        ...,        _type == "link" => {          ...,          "page": page->slug.current,          "post": post->slug.current        }      }    }  }
 export type ServicesPageQueryResult = {
@@ -794,6 +895,11 @@ declare module '@sanity/client' {
     '\n  *[_type == "product"] | order(title asc) {\n    _id,\n    title,\n    price,\n    "image": image.asset->url,\n    stripeUrl,\n    isPreOrder\n  }\n': ProductsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        link {\n          ...,\n          _type == "link" => {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "infoSection" => {\n        ...\n      },\n    }\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PagesSlugsResult
+    '\n  *[_type == "post" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PostPagesSlugsResult
+    '\n  *[_type == "post"] | order(date desc) {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    date,\n    "author": author->{\n      firstName,\n      lastName,\n      picture\n    }\n  }\n': AllPostsQueryResult
+    '\n  *[_type == "post" && _id != $skip] | order(date desc) [0...$limit] {\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    date,\n    "author": author->{\n      firstName,\n      lastName,\n      picture\n    }\n  }\n': MorePostsQueryResult
+    '\n  *[_type == "post" && slug.current == $slug][0]{\n    _id,\n    title,\n    "slug": slug.current,\n    excerpt,\n    date,\n    content,\n    coverImage,\n    "author": author->{\n      firstName,\n      lastName,\n      picture\n    }\n  }\n': PostQueryResult
+    '\n  *[_type in ["page", "post"] && defined(slug.current)]{\n    _type,\n    "slug": slug.current,\n    _updatedAt\n  }\n': SitemapDataResult
     '\n  *[_type == "servicesPage" && _id == "servicesPage"][0]{\n    _id,\n    title,\n    intro,\n    "items": items[]{\n      _key,\n      title,\n      description,\n      "imageUrl": image.asset->url,\n      buttonText,\n      buttonLink{\n        ...,\n        _type == "link" => {\n          ...,\n          "page": page->slug.current,\n          "post": post->slug.current\n        }\n      }\n    }\n  }\n': ServicesPageQueryResult
   }
 }
