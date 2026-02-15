@@ -13,9 +13,9 @@ type CategoryOption = {
 const CATEGORY_OPTIONS: CategoryOption[] = [
   {value: 'allmant', label: 'Allmän fråga'},
   {value: 'vaxtbestallning', label: 'Växtbeställning'},
-  {value: 'radgivning', label: 'Rådgivning'},
+  {value: 'radgivning', label: 'Personlig rådgivning'},
   {value: 'beskaring-skotsel', label: 'Beskäring & Skötsel'},
-  {value: 'binderier', label: 'Binderier – Bröllop, begravning, fest, övrigt'},
+  {value: 'binderier', label: 'Binderi & floristik – Bröllop, begravning, fest, övrigt'},
   {value: 'workshop-forelasningar', label: 'Workshop & föreläsningar'},
   {value: 'fest-konferens', label: 'Fest & Konferens'},
 ]

@@ -3,7 +3,21 @@ import {defineQuery} from 'next-sanity'
 export const settingsQuery = defineQuery(`
   *[_type == "settings"][0] {
     ...,
-    "heroVideoUrl": heroVideo.asset->url
+    "heroVideoUrl": heroVideo.asset->url,
+    "assortmentItems": assortmentItems[]{
+      _key,
+      title,
+      description,
+      "imageUrl": image.asset->url,
+      link{
+        ...,
+        _type == "link" => {
+          ...,
+          "page": page->slug.current,
+          "post": post->slug.current
+        }
+      }
+    }
   }
 `)
 

@@ -68,22 +68,60 @@ export default async function OmOssPage() {
           </div>
         </div>
 
-        {/* HISTORY (From Om oss) */}
+        {/* OM OSS TEXTBLOCK */}
         <div className="py-20 border-t border-stone-200">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-serif text-brand-dark mb-4">Vår historia</h2>
+            <h2 className="text-3xl md:text-5xl font-serif text-brand-dark mb-4">Om oss</h2>
             <div className="w-24 h-1 bg-brand mx-auto"></div>
           </div>
 
-          <div className="prose prose-stone prose-lg max-w-3xl mx-auto text-stone-700 mb-20">
-            <p>
-              Här på sluttningarna har det sålts växter och blommor sedan 1940-talet. 
-              Det hela började med Alrik och Tekla som startade upp trädgårdshandeln.
-              Därefter drevs verksamheten vidare av Blom-Britta respektive Blom-Karin under många år.
-            </p>
-            <p>
-              Nu fortsätter vi den resan med Rotens Trädgård! Vår vision är att skapa en familjär mötesplats där trädgård, konst och kultur kan mötas.
-            </p>
+          <div className="prose prose-stone prose-lg max-w-3xl mx-auto text-stone-700 mb-20 space-y-14">
+            <section>
+              <h3 className="font-serif text-brand-dark">Vår historia</h3>
+              <p>
+                Här på sluttningarna har det sålts växter och blommor sedan 1940-talet.
+                Det hela började med Alrik och Tekla som startade upp trädgårdshandeln.
+                Därefter har verksamheten drivits vidare av olika eldsjälar på Skovägen 8 i
+                Bjursås. Blom-Britta, Blom-Karin, Linn och Lisa har alla utvecklat platsen
+                genom åren, och 2023 tog Markus och Carolina över taktpinnen för att
+                fortsätta resan med Rotens Trädgård.
+              </p>
+            </section>
+
+            <section>
+              <h3 className="font-serif text-brand-dark">Det här är Rotens</h3>
+              <p>
+                Rotens ligger beläget på Skovägen 8 i Bjursås, mellan Falun och Rättvik i det
+                natursköna Dalarna. I vår handelsträdgård hittar du egenodlade och härdiga
+                växter, självplock av blommor och ett brett utbud för hem och trädgård, med
+                fokus på miljövänliga val och hållbar kvalitet. Här finns ett lekområde för de
+                små trädgårdsmästarna och ett grönt sommarcafé som gör Rotens till ett
+                uppskattat besöksmål i Dalarna. Under året fylls platsen av kurser och
+                evenemang där trädgård, konst och kultur möts i en familjär miljö som inspirerar
+                till liv, glädje och välmående.
+              </p>
+              <p>
+                Vi vill att alla ska lyckas med sin trädgård och känna tjusningen med odling.
+                Därför lägger vi stor vikt vid personlig rådgivning och kunskapsdelning. Vi
+                erbjuder trädgårdstjänster såsom beskärning och flisning, rådgivning,
+                trädgårdsskötsel, enklare anläggning med mera. Vi ger föreläsningar, håller
+                kurser och samarbetar med olika aktörer lokalt och regionalt. Rotens kan
+                dessutom hyras för gröna konferenser, fester, bröllop eller firande av olika
+                slag.
+              </p>
+            </section>
+
+            <section>
+              <h3 className="font-serif text-brand-dark">Vår vision</h3>
+              <p>
+                Vår vision är att skapa en levande mötesplats där trädgård, konst och kultur
+                förenas för att inspirera och bidra till välmående.
+              </p>
+              <p>
+                Vi vill vara en positiv kraft för det lokala och gröna kulturarvet i Dalarna med
+                ett erbjudande som värnar om vår miljö.
+              </p>
+            </section>
           </div>
 
           <div className="bg-brand-light/10 p-8 md:p-16 text-center rounded-sm">

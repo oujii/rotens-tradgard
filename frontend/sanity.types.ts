@@ -325,6 +325,19 @@ export type Settings = {
     phone?: string
     email?: string
   }
+  assortmentItems?: Array<{
+    title: string
+    description: string
+    image?: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    link?: Link
+    _key: string
+  }>
   description?: string
   ogImage?: {
     asset?: SanityImageAssetReference
@@ -617,7 +630,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol
 
 // Source: sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    ...,    "heroVideoUrl": heroVideo.asset->url  }
+// Query: *[_type == "settings"][0] {    ...,    "heroVideoUrl": heroVideo.asset->url,    "assortmentItems": assortmentItems[]{      _key,      title,      description,      "imageUrl": image.asset->url,      link{        ...,        _type == "link" => {          ...,          "page": page->slug.current,          "post": post->slug.current        }      }    }  }
 export type SettingsQueryResult = {
   _id: string
   _type: 'settings'
@@ -640,6 +653,20 @@ export type SettingsQueryResult = {
     phone?: string
     email?: string
   }
+  assortmentItems: Array<{
+    _key: string
+    title: string
+    description: string
+    imageUrl: string | null
+    link: {
+      _type: 'link'
+      linkType?: 'href' | 'page' | 'post'
+      href?: string
+      page: string | null
+      post: string | null
+      openInNewTab?: boolean
+    } | null
+  }> | null
   description?: string
   ogImage?: {
     asset?: SanityImageAssetReference
@@ -882,7 +909,7 @@ export type ServicesPageQueryResult = {
 import '@sanity/client'
 declare module '@sanity/client' {
   interface SanityQueries {
-    '\n  *[_type == "settings"][0] {\n    ...,\n    "heroVideoUrl": heroVideo.asset->url\n  }\n': SettingsQueryResult
+    '\n  *[_type == "settings"][0] {\n    ...,\n    "heroVideoUrl": heroVideo.asset->url,\n    "assortmentItems": assortmentItems[]{\n      _key,\n      title,\n      description,\n      "imageUrl": image.asset->url,\n      link{\n        ...,\n        _type == "link" => {\n          ...,\n          "page": page->slug.current,\n          "post": post->slug.current\n        }\n      }\n    }\n  }\n': SettingsQueryResult
     '\n  *[_type == "event"] | order(date asc) {\n    _id,\n    title,\n    slug,\n    date,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventsQueryResult
     '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    price,\n    description,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventQueryResult
     '\n  *[_type == "product"] | order(title asc) {\n    _id,\n    title,\n    price,\n    "image": image.asset->url,\n    stripeUrl,\n    isPreOrder\n  }\n': ProductsQueryResult

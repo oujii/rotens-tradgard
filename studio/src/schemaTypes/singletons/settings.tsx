@@ -49,6 +49,54 @@ export const settings = defineType({
       ]
     }),
 
+    // HOMEPAGE ASSORTMENT CARDS
+    defineField({
+      name: 'assortmentItems',
+      title: 'Vårt sortiment (startsidan)',
+      description:
+        'Korten som visas i sektionen "Vårt sortiment" på startsidan.',
+      type: 'array',
+      validation: (Rule) => Rule.max(4),
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Rubrik',
+              type: 'string',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Beskrivning',
+              type: 'text',
+              rows: 3,
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'image',
+              title: 'Bild',
+              type: 'image',
+              options: {hotspot: true},
+            }),
+            defineField({
+              name: 'link',
+              title: 'Länk',
+              type: 'link',
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'description',
+              media: 'image',
+            },
+          },
+        },
+      ],
+    }),
+
     // SEO / META
     defineField({
       name: 'description',

@@ -9,67 +9,70 @@ export default async function TjansterPage() {
 
   const fallbackServices = [
     {
-      title: 'Butik',
-      description: 'Växter, krukor, jord och trädgårdstillbehör för säsongens behov.',
-      details: '',
+      title: 'Växter',
+      description:
+        'Vi odlar en stor del av våra växter lokalt. Sommarblommor, grönsaksplantor, träd, buskar och perenner. Vi erbjuder självplock av snittblommor under sommaren.',
+      details:
+        'Våra ledord är lokalt, härdigt, svenskodlat av hög kvalitet - det speglar vårt växtutbud på Rotens. Hos oss kan man förbeställa de växter man önskar, för leverans i slutet av april samt i slutet av augusti. På så sätt bidrar man även till färre transporter och minskat svinn.',
       image:
         'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Till butiken',
-      href: {linkType: 'href', href: '/butik'},
+      ctaLabel: 'Skicka växtförfrågan',
+      href: {linkType: 'href', href: '/kontakt?val=vaxtbestallning'},
     },
     {
-      title: 'Trädgård & Café',
-      description: 'En grön oas att strosa i, med sommarkafé för fika i det fria.',
-      details: '',
-      image:
-        'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Besök oss',
-      href: {linkType: 'href', href: '/om-oss'},
-    },
-    {
-      title: 'Trädgårdstjänster',
-      description: 'Skötsel, beskärning och hjälp på plats – anpassat efter din trädgård.',
-      details: '',
-      image:
-        'https://images.unsplash.com/photo-1599591037488-8260408f657d?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Boka hjälp',
-      href: {linkType: 'href', href: '/kontakt?val=beskaring-skotsel'},
-    },
-    {
-      title: 'Binderier / Blombud',
-      description: 'Personliga blomsterarrangemang och leverans vid önskemål.',
-      details: '',
-      image:
-        'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Beställ binderi',
-      href: {linkType: 'href', href: '/kontakt?val=binderier'},
-    },
-    {
-      title: 'Events',
-      description: 'Marknadsdagar och upplevelser som samlar trädgårdsintresserade.',
-      details: '',
-      image:
-        'https://images.unsplash.com/photo-1515165562835-c4cfa5ca4e0e?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Se kommande events',
-      href: {linkType: 'href', href: '/#events'},
-    },
-    {
-      title: 'Föreläsningar & workshops',
-      description: 'Inspirerande tillfällen med fokus på odling, jord och säsong.',
-      details: '',
-      image:
-        'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop',
-      ctaLabel: 'Fråga om plats',
-      href: {linkType: 'href', href: '/kontakt?val=workshop-forelasningar'},
-    },
-    {
-      title: 'Rådgivning',
-      description: 'Personlig vägledning för val av växter, planering och form.',
-      details: '',
+      title: 'Personlig rådgivning',
+      description:
+        'På Rotens ger vi personlig rådgivning kring val av växter, plantering och placering.',
+      details:
+        'Vi utgår alltid från dina önskemål och din trädgårds förutsättningar. Om så önskas erbjuder vi hembesök där vi analyserar platsen och återkommer med förslag.',
       image:
         'https://images.unsplash.com/photo-1416870213410-d93130d2268b?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Boka rådgivning',
       href: {linkType: 'href', href: '/kontakt?val=radgivning'},
+    },
+    {
+      title: 'Beskärning & Skötsel',
+      description:
+        'Vi beskär frukt- och prydnadsträd, buskar och häckar och kan sköta dina grönytor löpande under året.',
+      details:
+        'Vi erbjuder både uppbyggnads- och underhållsbeskärning med kunskap och precision. Om så önskas forslar vi bort växtmaterialet, alternativt flisar upp det på plats. Häckklippning, buskar, plantering och enklare anläggning - vi finns här för dig!',
+      image:
+        'https://images.unsplash.com/photo-1599591037488-8260408f657d?q=80&w=1200&auto=format&fit=crop',
+      ctaLabel: 'Boka beskärning',
+      href: {linkType: 'href', href: '/kontakt?val=beskaring-skotsel'},
+    },
+    {
+      title: 'Binderi & Floristik',
+      description:
+        'Vi gör blomsterbinderier för livets alla skeenden, alltifrån bröllop, fest och begravning till en fredagsbukett.',
+      details:
+        'Vår odling gör att vi är självförsörjande på snittblommor under sommaren och under vårvintern odlar vi egna tulpaner. Vi jobbar i möjligaste mån efter säsong, med naturmaterial och med ambitionen att minimera svinn och transporter. Under våra öppettider levererar vi blombud inom Bjursås med omnejd. Större leveranser ordnas enligt överenskommelse. Planerar du ett bröllop eller en begravning? Kontakta oss för ett första möte så berättar vi mer.',
+      image:
+        'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop',
+      ctaLabel: 'Kontakta binderi',
+      href: {linkType: 'href', href: '/kontakt?val=binderier'},
+    },
+    {
+      title: 'Workshop & Föreläsningar',
+      description:
+        'Kom och lär dig något nytt hos oss! Vi erbjuder en rad workshops och föreläsningar med fokus på hållbarhet, odling och trädgårdskultur för privatpersoner, företag och föreningar.',
+      details:
+        'Vill ni hellre att vi kommer till er? Boka oss gärna som gästföreläsare på ert företag, event eller seminarium - vi älskar mötet med människor, att inspirera och dela med oss av kunskap.',
+      image:
+        'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop',
+      ctaLabel: 'Boka workshop',
+      href: {linkType: 'href', href: '/kontakt?val=workshop-forelasningar'},
+    },
+    {
+      title: 'Fest & Konferens',
+      description:
+        'Välkommen att boka Rotens för ditt speciella tillfälle. Vi erbjuder även gröna och kreativa konferenser.',
+      details:
+        'Vill du ha fest i det gröna? Eller ta med dig teamet bort från kontoret en stund? Rotens står till ditt förfogande. Vi har ytor för att husera sällskap i växthuset såväl som i trädgården, allt utifrån årstidens förutsättningar. Mat och dryck kan ordnas enligt önskemål. Vi skräddarsyr din upplevelse.',
+      image:
+        'https://images.unsplash.com/photo-1515165562835-c4cfa5ca4e0e?q=80&w=1200&auto=format&fit=crop',
+      ctaLabel: 'Skicka förfrågan',
+      href: {linkType: 'href', href: '/kontakt?val=fest-konferens'},
     },
   ]
 

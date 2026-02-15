@@ -325,6 +325,19 @@ export type Settings = {
     phone?: string
     email?: string
   }
+  assortmentItems?: Array<{
+    title: string
+    description: string
+    image?: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      _type: 'image'
+    }
+    link?: Link
+    _key: string
+  }>
   description?: string
   ogImage?: {
     asset?: SanityImageAssetReference

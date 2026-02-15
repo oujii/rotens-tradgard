@@ -1,8 +1,18 @@
+import type {Metadata} from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { settingsQuery, eventsQuery } from '@/sanity/lib/queries'
 import EventList from '@/app/components/EventList'
+import ResolvedLink from '@/app/components/ResolvedLink'
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'Rotens Trädgård i Bjursås | Handelsträdgård, café & besöksmål i Dalarna',
+  },
+  description:
+    'Besök Rotens Trädgård i Bjursås mellan Falun och Rättvik. Handelsträdgård, växthus, café, evenemang och hållbara, lokala val i natursköna Dalarna.',
+}
 
 export default async function Page() {
   const { data: settings } = await sanityFetch({ query: settingsQuery })
@@ -20,6 +30,44 @@ export default async function Page() {
     phone: '(+46) 73 738 48 53',
     email: 'info@rotenstradgard.se'
   }
+  const fallbackAssortmentItems = [
+    {
+      _key: 'vaxter',
+      title: 'Växter',
+      description: 'Lokalt, härdigt, svenskodlat och hög kvalitet - det speglar vårt växtutbud.',
+      imageUrl: null,
+      icon: '✿',
+      link: {linkType: 'href', href: '/butik'},
+    },
+    {
+      _key: 'redskap-tillbehor',
+      title: 'Redskap & tillbehör',
+      description: 'Kvalitetsredskap och tillbehör som hjälper dig att lyckas i din trädgård.',
+      imageUrl: null,
+      icon: '⚱',
+      link: {linkType: 'href', href: '/butik'},
+    },
+    {
+      _key: 'jord-jordkompisar',
+      title: 'Jord & jordkompisar',
+      description: 'Brett utbud av jordar och kompisar som bidrar med ny kraft till trötta jordar.',
+      imageUrl: null,
+      icon: '❦',
+      link: {linkType: 'href', href: '/butik'},
+    },
+    {
+      _key: 'inredning-presentartiklar',
+      title: 'Inredning & presentartiklar',
+      description: 'Noga utvalt sortiment av krukor, vaser, ätbart och diverse vackra ting.',
+      imageUrl: null,
+      icon: '✦',
+      link: {linkType: 'href', href: '/butik'},
+    },
+  ]
+  const assortmentItems =
+    settings?.assortmentItems && settings.assortmentItems.length > 0
+      ? settings.assortmentItems
+      : fallbackAssortmentItems
   
   return (
     <div className="flex flex-col min-h-screen">
@@ -113,7 +161,7 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* SUMMER CAFE SECTION */}
+      {/* HANDELSTRADGARD SECTION */}
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm shadow-lg bg-stone-100">
@@ -125,21 +173,36 @@ export default async function Page() {
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
-          <div className="space-y-6">
+          <div className="space-y-5">
             <h2 className="text-3xl md:text-4xl font-serif text-brand-dark">
-              Välkommen till sommarkaféet
+              Välkommen till vår handelsträdgård!
             </h2>
             <p className="text-lg text-stone-700 leading-relaxed">
-              Slå dig ner bland grönskan och njut av en kopp kaffe, något hembakat
-              och lugnet i trädgården. Hos oss är du alltid varmt välkommen – oavsett
-              om du bara vill ta en paus eller göra ett längre besök.
+              På sluttningarna i Bjursås i Dalarna har det sålts växter sedan 1940-talet.
+              I dag lever traditionen vidare på Rotens Trädgård med omtanke om både natur
+              och människor.
+            </p>
+            <p className="text-lg text-stone-700 leading-relaxed">
+              I vår handelsträdgård och våra växthus på Skovägen 8, mellan Falun och
+              Rättvik, hittar du egenodlade och härdiga växter, självplock av blommor
+              och ett brett utbud för hem och trädgård med fokus på miljövänliga val och
+              hållbar kvalitet.
+            </p>
+            <p className="text-lg text-stone-700 leading-relaxed">
+              Här finns ett grönt sommarcafé som gör Rotens till ett uppskattat besöksmål
+              och utflyktsmål i Dalarna.
+            </p>
+            <p className="text-lg text-stone-700 leading-relaxed">
+              Under året fylls platsen av kurser och evenemang där trädgård, konst och
+              kultur möts i en familjär miljö som inspirerar till liv, glädje och
+              välmående.
             </p>
             <div>
               <Link
                 href="/om-oss"
                 className="inline-block px-8 py-3 border border-brand text-brand hover:bg-brand hover:text-white transition-colors uppercase tracking-widest text-sm font-medium"
               >
-                Besök oss
+                Läs mer om oss
               </Link>
             </div>
           </div>
@@ -173,49 +236,53 @@ export default async function Page() {
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-12 text-center">Vårt sortiment</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Card 1 */}
-            <Link href="/butik" className="group cursor-pointer">
-              <div className="relative aspect-[3/4] overflow-hidden bg-brand-light/10 mb-6">
-                <div className="absolute inset-0 bg-brand-light/20 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center text-brand-dark/20 font-serif text-6xl">✿</div>
-              </div>
-              <h3 className="text-2xl font-serif text-brand-dark mb-2 group-hover:text-brand transition-colors">Växter</h3>
-              <p className="text-stone-600">Från tåliga perenner till sommarblommor.</p>
-            </Link>
+            {assortmentItems.map((item: any, index: number) => {
+              const title = item?.title || 'Sortiment'
+              const description = item?.description || ''
+              const imageUrl = item?.imageUrl || null
+              const icon = item?.icon || '✿'
+              const key = item?._key || `${title}-${index}`
+              const cardContent = (
+                <>
+                  <div className="relative aspect-[3/4] overflow-hidden bg-brand-light/10 mb-6">
+                    {imageUrl ? (
+                      <Image
+                        src={imageUrl}
+                        alt={title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-brand-light/20 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
+                        <div className="absolute inset-0 flex items-center justify-center text-brand-dark/20 font-serif text-6xl">
+                          {icon}
+                        </div>
+                      </>
+                    )}
+                  </div>
+                  <h3 className="text-2xl font-serif text-brand-dark mb-2 group-hover:text-brand transition-colors">
+                    {title}
+                  </h3>
+                  <p className="text-stone-600">{description}</p>
+                </>
+              )
 
-            {/* Card 2 */}
-            <div className="group">
-              <div className="relative aspect-[3/4] overflow-hidden bg-brand-light/10 mb-6">
-                <div className="absolute inset-0 bg-brand-dark/20 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
-                 {/* Image Placeholder */}
-                 <div className="absolute inset-0 flex items-center justify-center text-brand-dark/20 font-serif text-6xl">⚱</div>
-              </div>
-              <h3 className="text-2xl font-serif text-brand-dark mb-2">Redskap & tillbehör</h3>
-              <p className="text-stone-600">Allt för plantering, skötsel och säsong.</p>
-            </div>
+              if (item?.link) {
+                return (
+                  <ResolvedLink key={key} link={item.link} className="group cursor-pointer">
+                    {cardContent}
+                  </ResolvedLink>
+                )
+              }
 
-            {/* Card 3 */}
-            <div className="group">
-              <div className="relative aspect-[3/4] overflow-hidden bg-brand-light/10 mb-6">
-                <div className="absolute inset-0 bg-brand/20 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
-                 {/* Image Placeholder */}
-                 <div className="absolute inset-0 flex items-center justify-center text-brand-dark/20 font-serif text-6xl">❦</div>
-              </div>
-              <h3 className="text-2xl font-serif text-brand-dark mb-2">Jord & jordkompisar</h3>
-              <p className="text-stone-600">Näring, jord och smarta jordtips.</p>
-            </div>
-
-            {/* Card 4 */}
-            <div className="group">
-              <div className="relative aspect-[3/4] overflow-hidden bg-brand-light/10 mb-6">
-                <div className="absolute inset-0 bg-brand-light/20 group-hover:scale-105 transition-transform duration-700 ease-out"></div>
-                {/* Image Placeholder */}
-                <div className="absolute inset-0 flex items-center justify-center text-brand-dark/20 font-serif text-6xl">✦</div>
-              </div>
-              <h3 className="text-2xl font-serif text-brand-dark mb-2">Inredning & presentartiklar</h3>
-              <p className="text-stone-600">Utvalda detaljer för hem och gåvor.</p>
-            </div>
+              return (
+                <div key={key} className="group">
+                  {cardContent}
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
