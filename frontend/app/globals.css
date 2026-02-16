@@ -36,7 +36,7 @@
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
   /* Fonts */
-  --font-sans: "Futura", "Futura PT", "Avenir Next", "Avenir", "Century Gothic", "Trebuchet MS", sans-serif;
+  --font-sans: "Futura", "Futura PT", var(--font-josefin), "Avenir Next", "Avenir", "Century Gothic", "Trebuchet MS", sans-serif;
   --font-serif: var(--font-josefin);
   --font-mono: var(--font-ibm-plex-mono);
 
