@@ -25,6 +25,25 @@ export default async function Page() {
     saturday: '10 - 15',
     sunday: 'Stängt'
   }
+  const customOpeningHoursLines =
+    settings?.openingHours?.customText
+      ?.split('\n')
+      .map((line: string) => line.trim())
+      .filter(Boolean) || []
+  const parsedCustomOpeningHours = customOpeningHoursLines.map((line: string) => {
+    const separatorIndex = line.indexOf(':')
+    if (separatorIndex === -1) {
+      return {label: line, value: null}
+    }
+
+    const label = line.slice(0, separatorIndex).trim()
+    const value = line.slice(separatorIndex + 1).trim()
+    if (!label || !value) {
+      return {label: line, value: null}
+    }
+
+    return {label, value}
+  })
   const contactInfo = settings?.contactInfo || {
     address: 'Skovägen 8, 790 21 Bjursås, Dalarna',
     phone: '(+46) 73 738 48 53',
@@ -177,22 +196,12 @@ export default async function Page() {
             <h2 className="text-3xl md:text-4xl font-serif text-brand-dark">
               Välkommen till vår handelsträdgård!
             </h2>
-            <p className="text-lg text-stone-700 leading-relaxed">
-              På sluttningarna i Bjursås i Dalarna har det sålts växter sedan 1940-talet.
-              I dag lever traditionen vidare på Rotens Trädgård med omtanke om både natur
-              och människor.
+            <p className="text-lg text-stone-600 leading-relaxed">
+              I vår handelsträdgård, på Skovägen 8 mellan Falun och Rättvik, hittar du
+              egenodlade och härdiga växter, självplock av blommor och ett brett utbud
+              för hem och trädgård med fokus på miljövänliga val och hållbar kvalitet.
             </p>
-            <p className="text-lg text-stone-700 leading-relaxed">
-              I vår handelsträdgård och våra växthus på Skovägen 8, mellan Falun och
-              Rättvik, hittar du egenodlade och härdiga växter, självplock av blommor
-              och ett brett utbud för hem och trädgård med fokus på miljövänliga val och
-              hållbar kvalitet.
-            </p>
-            <p className="text-lg text-stone-700 leading-relaxed">
-              Här finns ett grönt sommarcafé som gör Rotens till ett uppskattat besöksmål
-              och utflyktsmål i Dalarna.
-            </p>
-            <p className="text-lg text-stone-700 leading-relaxed">
+            <p className="text-lg text-stone-600 leading-relaxed">
               Under året fylls platsen av kurser och evenemang där trädgård, konst och
               kultur möts i en familjär miljö som inspirerar till liv, glädje och
               välmående.
@@ -202,7 +211,7 @@ export default async function Page() {
                 href="/om-oss"
                 className="inline-block px-8 py-3 border border-brand text-brand hover:bg-brand hover:text-white transition-colors uppercase tracking-widest text-sm font-medium"
               >
-                Läs mer om oss
+                Om oss
               </Link>
             </div>
           </div>
@@ -310,20 +319,50 @@ export default async function Page() {
           
           <div className="bg-white/5 p-8 md:p-12 border border-white/10 rounded-sm">
             <h3 className="text-2xl font-serif text-white mb-6">Öppettider</h3>
-            <ul className="space-y-3 text-lg font-light">
-              <li className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-white/80">Vardagar</span>
-                <span className="text-white font-medium">{openingHours.weekdays}</span>
-              </li>
-              <li className="flex justify-between border-b border-white/10 pb-2">
-                <span className="text-white/80">Lördag</span>
-                <span className="text-white font-medium">{openingHours.saturday}</span>
-              </li>
-              <li className="flex justify-between pb-2">
-                <span className="text-white/80">Söndag</span>
-                <span className="text-white font-medium">{openingHours.sunday}</span>
-              </li>
-            </ul>
+            {parsedCustomOpeningHours.length > 0 ? (
+              <ul className="space-y-3 text-lg font-light">
+                {parsedCustomOpeningHours.map((entry, index: number) => {
+                  const isLast = index === parsedCustomOpeningHours.length - 1
+                  const borderClass = isLast ? '' : 'border-b border-white/10'
+
+                  if (entry.value) {
+                    return (
+                      <li
+                        key={`${entry.label}-${index}`}
+                        className={`flex justify-between pb-2 ${borderClass}`.trim()}
+                      >
+                        <span className="text-white/80">{entry.label}</span>
+                        <span className="text-white font-medium">{entry.value}</span>
+                      </li>
+                    )
+                  }
+
+                  return (
+                    <li
+                      key={`${entry.label}-${index}`}
+                      className={`pb-2 text-white font-medium ${borderClass}`.trim()}
+                    >
+                      {entry.label}
+                    </li>
+                  )
+                })}
+              </ul>
+            ) : (
+              <ul className="space-y-3 text-lg font-light">
+                <li className="flex justify-between border-b border-white/10 pb-2">
+                  <span className="text-white/80">Vardagar</span>
+                  <span className="text-white font-medium">{openingHours.weekdays}</span>
+                </li>
+                <li className="flex justify-between border-b border-white/10 pb-2">
+                  <span className="text-white/80">Lördag</span>
+                  <span className="text-white font-medium">{openingHours.saturday}</span>
+                </li>
+                <li className="flex justify-between pb-2">
+                  <span className="text-white/80">Söndag</span>
+                  <span className="text-white font-medium">{openingHours.sunday}</span>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </section>

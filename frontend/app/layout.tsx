@@ -1,7 +1,7 @@
 import './globals.css'
 
 import type {Metadata} from 'next'
-import {Inter, IBM_Plex_Mono, Playfair_Display} from 'next/font/google'
+import {IBM_Plex_Mono, Josefin_Sans} from 'next/font/google'
 import {draftMode} from 'next/headers'
 import {toPlainText} from 'next-sanity'
 import {VisualEditing} from 'next-sanity/visual-editing'
@@ -42,12 +42,6 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
-  display: 'swap',
-})
-
 const ibmPlexMono = IBM_Plex_Mono({
   variable: '--font-ibm-plex-mono',
   weight: ['400'],
@@ -55,8 +49,9 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: 'swap',
 })
 
-const playfair = Playfair_Display({
-  variable: '--font-playfair',
+const josefinSans = Josefin_Sans({
+  variable: '--font-josefin',
+  weight: ['400', '700'],
   subsets: ['latin'],
   display: 'swap',
 })
@@ -65,9 +60,12 @@ export default async function RootLayout({children}: {children: React.ReactNode}
   const {isEnabled: isDraftMode} = await draftMode()
 
   return (
-    <html lang="en" className={`${inter.variable} ${ibmPlexMono.variable} ${playfair.variable} bg-stone-50 text-stone-900`}>
+    <html
+      lang="en"
+      className={`${josefinSans.variable} ${ibmPlexMono.variable} bg-stone-50 text-stone-900`}
+    >
       <body>
-        <section className="min-h-screen pt-24">
+        <section className="min-h-screen pt-20">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           {isDraftMode && (
             <>

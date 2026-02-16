@@ -31,6 +31,14 @@ export const settings = defineType({
       title: 'Opening Hours',
       type: 'object',
       fields: [
+        defineField({
+          name: 'customText',
+          title: 'Öppettider (fri text)',
+          type: 'text',
+          rows: 4,
+          description:
+            'Om detta fält är ifyllt används det på webbplatsen i stället för fälten nedan. Skriv en rad per öppettid i formatet "Dag: Tid", t.ex. "Onsdag-Söndag: 10 - 17".',
+        }),
         defineField({name: 'weekdays', title: 'Weekdays', type: 'string', initialValue: '10 - 18'}),
         defineField({name: 'saturday', title: 'Saturday', type: 'string', initialValue: '10 - 15'}),
         defineField({name: 'sunday', title: 'Sunday', type: 'string', initialValue: 'Stängt'}),

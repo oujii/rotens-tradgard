@@ -18,7 +18,7 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:block">
-          <ul className="flex items-center gap-8 text-stone-600 font-medium text-xs tracking-widest uppercase">
+          <ul className="flex items-center gap-8 text-stone-600 font-serif font-normal text-xs tracking-widest uppercase">
             <li>
               <Link href="/butik" className="hover:text-brand transition-colors">Webbutik</Link>
             </li>

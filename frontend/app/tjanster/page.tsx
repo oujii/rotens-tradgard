@@ -94,10 +94,10 @@ export default async function TjansterPage() {
 
   return (
     <div className="pt-24 min-h-screen bg-stone-50 pb-20">
-      <div className="bg-brand-dark text-white py-20">
+      <div className="bg-brand-dark text-white py-16">
         <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl md:text-6xl font-serif mb-6 text-white">{title}</h1>
-          <p className="text-brand-accent text-xl font-light max-w-2xl mx-auto leading-relaxed italic">
+          <h1 className="text-4xl md:text-6xl font-serif mb-4 text-white">{title}</h1>
+          <p className="text-brand-accent text-lg font-light max-w-2xl mx-auto">
             {intro}
           </p>
         </div>
@@ -112,47 +112,45 @@ export default async function TjansterPage() {
             return (
               <details
                 key={service.key || service.title}
-                className="group bg-white border border-stone-200 rounded-sm shadow-sm open:shadow-md transition-shadow duration-300"
+                className="group bg-white border border-stone-200 overflow-hidden hover:border-brand-light transition-colors duration-300"
               >
-                <summary className="cursor-pointer list-none px-6 py-5 [&::-webkit-details-marker]:hidden">
-                  <div className="space-y-4">
-                    <div className="relative aspect-[16/9] w-full overflow-hidden bg-stone-100 rounded-sm">
-                      {service.image ? (
-                        <Image
-                          src={service.image}
-                          alt={service.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, 480px"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-4xl">
-                          ✿
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="min-w-0">
-                        <h2 className="text-2xl font-serif text-brand-dark mb-2">{service.title}</h2>
-                        {summaryText && (
-                          <p
-                            className="text-stone-600 leading-relaxed"
-                            style={{
-                              display: '-webkit-box',
-                              WebkitLineClamp: 2,
-                              WebkitBoxOrient: 'vertical',
-                              overflow: 'hidden',
-                            }}
-                          >
-                            {summaryText}
-                          </p>
-                        )}
-                        <span className="mt-3 inline-flex items-center gap-2 text-sm uppercase tracking-widest text-brand transition-colors group-open:text-brand-dark">
-                          Läs mer
-                          <span className="text-lg leading-none">+</span>
-                        </span>
+                <summary className="cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <div className="relative h-48 w-full bg-stone-100 overflow-hidden">
+                    {service.image ? (
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        sizes="(max-width: 768px) 100vw, 480px"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center text-stone-300 font-serif text-4xl">
+                        ✿
                       </div>
-                    </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h2 className="text-xl font-serif text-brand-dark group-hover:text-brand transition-colors mb-2">
+                      {service.title}
+                    </h2>
+                    {summaryText && (
+                      <p
+                        className="text-stone-600 leading-relaxed"
+                        style={{
+                          display: '-webkit-box',
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        {summaryText}
+                      </p>
+                    )}
+                    <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-stone-500 group-hover:text-brand-dark transition-colors">
+                      Läs mer
+                      <span className="text-lg leading-none">+</span>
+                    </span>
                   </div>
                 </summary>
                 <div className="px-6 pb-6 pt-4 border-t border-stone-100">

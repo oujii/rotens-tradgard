@@ -5,14 +5,22 @@
 @layer base {
   h1,
   h2,
-  h3,
+  h3 {
+    @apply font-serif font-bold tracking-tight text-brand-dark;
+  }
   h4,
   h5,
   h6 {
-    @apply font-serif tracking-tight text-green-900;
+    @apply font-serif font-normal tracking-tight text-brand-dark;
   }
   body {
     @apply bg-stone-50 text-stone-800 font-sans;
+  }
+}
+
+@layer components {
+  .subheading {
+    @apply font-serif font-normal;
   }
 }
 
@@ -28,17 +36,17 @@
   --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
 
   /* Fonts */
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-sans: "Futura", "Futura PT", "Avenir Next", "Avenir", "Century Gothic", "Trebuchet MS", sans-serif;
+  --font-serif: var(--font-josefin);
   --font-mono: var(--font-ibm-plex-mono);
 
   /* Garden Center Palette Overrides */
-  --color-brand: #3A5A40; /* Hunter Green */
-  --color-brand-light: #588157; /* Sage */
-  --color-brand-dark: #344E41; /* Dark Slate */
+  --color-brand: #476949; /* Primary Green */
+  --color-brand-light: #B6CBB1; /* Soft Green Accent */
+  --color-brand-dark: #355038; /* Deep Green for contrast */
   
-  --color-accent: #A3B18A; /* Light Sage */
-  --color-accent-pop: #DAD7CD; /* Parchment */
+  --color-accent: #B6CBB1; /* Secondary Green Accent */
+  --color-accent-pop: #E8BEC0; /* Pink Accent */
 
   /* Neutral overrides for a softer look */
   --color-black: #1a1c1a;

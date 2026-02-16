@@ -10,20 +10,20 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        serif: ['var(--font-playfair)'],
+        sans: ['var(--font-sans)'],
+        serif: ['var(--font-serif)'],
         mono: ['var(--font-ibm-plex-mono)'],
       },
       colors: {
-        // Rotens Palette matches globals.css
+        // Rotens brand palette
         brand: {
-          DEFAULT: '#3A5A40',
-          light: '#588157',
-          dark: '#344E41',
+          DEFAULT: '#476949',
+          light: '#B6CBB1',
+          dark: '#355038',
         },
         accent: {
-          DEFAULT: '#A3B18A',
-          pop: '#DAD7CD',
+          DEFAULT: '#B6CBB1',
+          pop: '#E8BEC0',
         },
       },
     },

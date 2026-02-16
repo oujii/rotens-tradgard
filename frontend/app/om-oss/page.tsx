@@ -11,6 +11,25 @@ export default async function OmOssPage() {
     saturday: '10 - 15',
     sunday: 'Stängt'
   }
+  const customOpeningHoursLines =
+    settings?.openingHours?.customText
+      ?.split('\n')
+      .map((line: string) => line.trim())
+      .filter(Boolean) || []
+  const parsedCustomOpeningHours = customOpeningHoursLines.map((line: string) => {
+    const separatorIndex = line.indexOf(':')
+    if (separatorIndex === -1) {
+      return {label: line, value: null}
+    }
+
+    const label = line.slice(0, separatorIndex).trim()
+    const value = line.slice(separatorIndex + 1).trim()
+    if (!label || !value) {
+      return {label: line, value: null}
+    }
+
+    return {label, value}
+  })
   const contactInfo = settings?.contactInfo || {
     address: 'Skovägen 8, 790 21 Bjursås, Dalarna',
     phone: '(+46) 73 738 48 53',
@@ -29,7 +48,7 @@ export default async function OmOssPage() {
             <h1 className="text-4xl md:text-6xl font-serif text-white mb-4 drop-shadow-md">
               Välkommen till oss
             </h1>
-            <p className="text-xl text-accent-pop font-light max-w-2xl mx-auto drop-shadow-sm font-serif italic">
+            <p className="text-xl text-white/90 font-light max-w-2xl mx-auto drop-shadow-sm font-serif">
                En plats full av liv och glädje i Bjursås.
             </p>
          </div>
@@ -42,11 +61,28 @@ export default async function OmOssPage() {
           {/* Opening Hours */}
           <div className="bg-white p-8 shadow-sm rounded-sm border-t-4 border-brand">
             <h3 className="text-xl font-serif text-brand-dark mb-4 tracking-wider text-sm font-bold">Öppettider</h3>
-            <ul className="space-y-2 text-stone-600">
-              <li className="flex justify-between"><span>Vardagar</span> <span className="font-bold text-brand-dark">{openingHours.weekdays}</span></li>
-              <li className="flex justify-between"><span>Lördag</span> <span className="font-bold text-brand-dark">{openingHours.saturday}</span></li>
-              <li className="flex justify-between"><span>Söndag</span> <span className="font-bold text-brand-dark">{openingHours.sunday}</span></li>
-            </ul>
+            {parsedCustomOpeningHours.length > 0 ? (
+              <ul className="space-y-2 text-stone-600">
+                {parsedCustomOpeningHours.map((entry, index: number) =>
+                  entry.value ? (
+                    <li key={`${entry.label}-${index}`} className="flex justify-between">
+                      <span>{entry.label}</span>
+                      <span className="font-bold text-brand-dark">{entry.value}</span>
+                    </li>
+                  ) : (
+                    <li key={`${entry.label}-${index}`} className="font-bold text-brand-dark">
+                      {entry.label}
+                    </li>
+                  ),
+                )}
+              </ul>
+            ) : (
+              <ul className="space-y-2 text-stone-600">
+                <li className="flex justify-between"><span>Vardagar</span> <span className="font-bold text-brand-dark">{openingHours.weekdays}</span></li>
+                <li className="flex justify-between"><span>Lördag</span> <span className="font-bold text-brand-dark">{openingHours.saturday}</span></li>
+                <li className="flex justify-between"><span>Söndag</span> <span className="font-bold text-brand-dark">{openingHours.sunday}</span></li>
+              </ul>
+            )}
           </div>
 
           {/* Contact */}

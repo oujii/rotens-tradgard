@@ -316,6 +316,7 @@ export type Settings = {
     _type: 'file'
   }
   openingHours?: {
+    customText?: string
     weekdays?: string
     saturday?: string
     sunday?: string
@@ -644,6 +645,7 @@ export type SettingsQueryResult = {
     _type: 'file'
   }
   openingHours?: {
+    customText?: string
     weekdays?: string
     saturday?: string
     sunday?: string
