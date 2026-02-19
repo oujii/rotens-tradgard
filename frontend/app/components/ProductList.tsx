@@ -7,10 +7,10 @@ interface Product {
     _id: string
     title: string
     price: number
-    image: string
-    stripeUrl?: string
-    isPreOrder?: boolean
-    tags?: string[]
+    image: string | null
+    stripeUrl?: string | null
+    isPreOrder?: boolean | null
+    tags?: string[] | null
 }
 
 interface ProductListProps {
