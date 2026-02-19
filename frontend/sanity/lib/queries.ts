@@ -1,4 +1,4 @@
-import {defineQuery} from 'next-sanity'
+import { defineQuery } from 'next-sanity'
 
 export const settingsQuery = defineQuery(`
   *[_type == "settings"][0] {
@@ -8,15 +8,7 @@ export const settingsQuery = defineQuery(`
       _key,
       title,
       description,
-      "imageUrl": image.asset->url,
-      link{
-        ...,
-        _type == "link" => {
-          ...,
-          "page": page->slug.current,
-          "post": post->slug.current
-        }
-      }
+      "imageUrl": image.asset->url
     }
   }
 `)
@@ -52,7 +44,8 @@ export const productsQuery = defineQuery(`
     price,
     "image": image.asset->url,
     stripeUrl,
-    isPreOrder
+    isPreOrder,
+    tags
   }
 `)
 

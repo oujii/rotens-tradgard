@@ -1,5 +1,5 @@
-import {CogIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { CogIcon } from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
 
 export const settings = defineType({
   name: 'settings',
@@ -13,7 +13,7 @@ export const settings = defineType({
       type: 'string',
       initialValue: 'Rotens Trädgård',
     }),
-    
+
     // HERO SECTION
     defineField({
       name: 'heroVideo',
@@ -39,9 +39,9 @@ export const settings = defineType({
           description:
             'Om detta fält är ifyllt används det på webbplatsen i stället för fälten nedan. Skriv en rad per öppettid i formatet "Dag: Tid", t.ex. "Onsdag-Söndag: 10 - 17".',
         }),
-        defineField({name: 'weekdays', title: 'Weekdays', type: 'string', initialValue: '10 - 18'}),
-        defineField({name: 'saturday', title: 'Saturday', type: 'string', initialValue: '10 - 15'}),
-        defineField({name: 'sunday', title: 'Sunday', type: 'string', initialValue: 'Stängt'}),
+        defineField({ name: 'weekdays', title: 'Weekdays', type: 'string', initialValue: '10 - 18' }),
+        defineField({ name: 'saturday', title: 'Saturday', type: 'string', initialValue: '10 - 15' }),
+        defineField({ name: 'sunday', title: 'Sunday', type: 'string', initialValue: 'Stängt' }),
       ]
     }),
 
@@ -51,9 +51,9 @@ export const settings = defineType({
       title: 'Contact Information',
       type: 'object',
       fields: [
-        defineField({name: 'address', title: 'Address', type: 'string', initialValue: 'Skovägen 8, 790 21 Bjursås, Dalarna'}),
-        defineField({name: 'phone', title: 'Phone', type: 'string', initialValue: '(+46) 73 738 48 53'}),
-        defineField({name: 'email', title: 'Email', type: 'string', initialValue: 'info@rotenstradgard.se'}),
+        defineField({ name: 'address', title: 'Address', type: 'string', initialValue: 'Skovägen 8, 790 21 Bjursås, Dalarna' }),
+        defineField({ name: 'phone', title: 'Phone', type: 'string', initialValue: '(+46) 73 738 48 53' }),
+        defineField({ name: 'email', title: 'Email', type: 'string', initialValue: 'info@rotenstradgard.se' }),
       ]
     }),
 
@@ -86,12 +86,7 @@ export const settings = defineType({
               name: 'image',
               title: 'Bild',
               type: 'image',
-              options: {hotspot: true},
-            }),
-            defineField({
-              name: 'link',
-              title: 'Länk',
-              type: 'link',
+              options: { hotspot: true },
             }),
           ],
           preview: {

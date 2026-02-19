@@ -5,7 +5,7 @@ import { settingsQuery } from '@/sanity/lib/queries'
 
 export default async function OmOssPage() {
   const { data: settings } = await sanityFetch({ query: settingsQuery })
-  
+
   const openingHours = settings?.openingHours || {
     weekdays: '10 - 18',
     saturday: '10 - 15',
@@ -19,16 +19,16 @@ export default async function OmOssPage() {
   const parsedCustomOpeningHours = customOpeningHoursLines.map((line: string) => {
     const separatorIndex = line.indexOf(':')
     if (separatorIndex === -1) {
-      return {label: line, value: null}
+      return { label: line, value: null }
     }
 
     const label = line.slice(0, separatorIndex).trim()
     const value = line.slice(separatorIndex + 1).trim()
     if (!label || !value) {
-      return {label: line, value: null}
+      return { label: line, value: null }
     }
 
-    return {label, value}
+    return { label, value }
   })
   const contactInfo = settings?.contactInfo || {
     address: 'Skovägen 8, 790 21 Bjursås, Dalarna',
@@ -38,24 +38,24 @@ export default async function OmOssPage() {
 
   return (
     <div className="pt-24 min-h-screen bg-stone-50 pb-20">
-      
+
       {/* HERO SECTION */}
       <section className="relative h-[50vh] flex items-center justify-center bg-brand-dark overflow-hidden">
-         <div className="absolute inset-0 bg-brand-dark opacity-50 z-0"></div>
-         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
-         
-         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-serif text-white mb-4 drop-shadow-md">
-              Välkommen till oss
-            </h1>
-            <p className="text-xl text-white/90 font-light max-w-2xl mx-auto drop-shadow-sm font-serif">
-               En plats full av liv och glädje i Bjursås.
-            </p>
-         </div>
+        <div className="absolute inset-0 bg-brand-dark opacity-50 z-0"></div>
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-40 mix-blend-overlay"></div>
+
+        <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-serif text-white mb-4 drop-shadow-md">
+            Välkommen till oss
+          </h1>
+          <p className="text-xl text-white/90 font-light max-w-2xl mx-auto drop-shadow-sm font-serif">
+            En plats full av liv och glädje i Bjursås.
+          </p>
+        </div>
       </section>
 
       <div className="container mx-auto px-6 max-w-5xl -mt-16 relative z-20">
-        
+
         {/* INFO GRID */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {/* Opening Hours */}
@@ -63,7 +63,7 @@ export default async function OmOssPage() {
             <h3 className="text-xl font-serif text-brand-dark mb-4 tracking-wider text-sm font-bold">Öppettider</h3>
             {parsedCustomOpeningHours.length > 0 ? (
               <ul className="space-y-2 text-stone-600">
-                {parsedCustomOpeningHours.map((entry, index: number) =>
+                {parsedCustomOpeningHours.map((entry: any, index: number) =>
                   entry.value ? (
                     <li key={`${entry.label}-${index}`} className="flex justify-between">
                       <span>{entry.label}</span>
@@ -161,25 +161,35 @@ export default async function OmOssPage() {
           </div>
 
           <div className="bg-brand-light/10 p-8 md:p-16 text-center rounded-sm">
-             <div className="relative aspect-[3/4] max-w-sm mx-auto mb-8 shadow-xl rotate-1">
-                <Image 
-                  src="/images/markus_carolina.webp"
-                  alt="Markus Rosendal och Carolina Redman"
-                  fill
-                  className="object-cover rounded-sm"
-                />
-             </div>
-             <h3 className="text-3xl font-serif text-brand-dark mb-2">Markus & Carolina</h3>
-             <p className="text-brand font-medium uppercase tracking-wider text-sm mb-6">Driver Rotens Trädgård</p>
-             <p className="text-lg text-stone-700 italic max-w-2xl mx-auto leading-relaxed">
-               "Tillsammans med er vill vi skapa en trädgård full av liv och glädje!"
-             </p>
+            <div className="relative aspect-[3/4] max-w-sm mx-auto mb-8 shadow-xl rotate-1">
+              <Image
+                src="/images/markus_carolina.webp"
+                alt="Markus Rosendal och Carolina Redman"
+                fill
+                className="object-cover rounded-sm"
+              />
+            </div>
+            <h3 className="text-3xl font-serif text-brand-dark mb-2">Markus & Carolina</h3>
+            <p className="text-brand font-medium uppercase tracking-wider text-sm mb-6">Driver Rotens Trädgård</p>
+            <p className="text-lg text-stone-700 italic max-w-2xl mx-auto leading-relaxed">
+              "Tillsammans med er vill vi skapa en trädgård full av liv och glädje!"
+            </p>
           </div>
         </div>
 
         {/* MAP PLACEHOLDER */}
-        <div className="mt-20 h-96 bg-stone-200 w-full rounded-sm flex items-center justify-center text-stone-500 font-mono text-sm uppercase tracking-widest">
-           [ Interaktiv karta kommer här ]
+        <div className="mt-20 h-96 w-full rounded-sm overflow-hidden shadow-sm">
+          <iframe
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            scrolling="no"
+            marginHeight={0}
+            marginWidth={0}
+            src="https://maps.google.com/maps?q=Rotens%20Tr%C3%A4dg%C3%A5rd%2C%20Skov%C3%A4gen%208%2C%20Bjurs%C3%A5s&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            title="Karta till Rotens Trädgård"
+            className="grayscale hover:grayscale-0 transition-all duration-700"
+          ></iframe>
         </div>
 
       </div>

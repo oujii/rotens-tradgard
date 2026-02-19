@@ -1,10 +1,11 @@
-import type {Metadata} from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { settingsQuery, eventsQuery } from '@/sanity/lib/queries'
 import EventList from '@/app/components/EventList'
 import ResolvedLink from '@/app/components/ResolvedLink'
+import Newsletter from '@/app/components/Newsletter'
 
 export const metadata: Metadata = {
   title: {
@@ -33,16 +34,16 @@ export default async function Page() {
   const parsedCustomOpeningHours = customOpeningHoursLines.map((line: string) => {
     const separatorIndex = line.indexOf(':')
     if (separatorIndex === -1) {
-      return {label: line, value: null}
+      return { label: line, value: null }
     }
 
     const label = line.slice(0, separatorIndex).trim()
     const value = line.slice(separatorIndex + 1).trim()
     if (!label || !value) {
-      return {label: line, value: null}
+      return { label: line, value: null }
     }
 
-    return {label, value}
+    return { label, value }
   })
   const contactInfo = settings?.contactInfo || {
     address: 'Skovägen 8, 790 21 Bjursås, Dalarna',
@@ -56,7 +57,7 @@ export default async function Page() {
       description: 'Lokalt, härdigt, svenskodlat och hög kvalitet - det speglar vårt växtutbud.',
       imageUrl: null,
       icon: '✿',
-      link: {linkType: 'href', href: '/butik'},
+      link: { linkType: 'href', href: '/butik' },
     },
     {
       _key: 'redskap-tillbehor',
@@ -64,7 +65,7 @@ export default async function Page() {
       description: 'Kvalitetsredskap och tillbehör som hjälper dig att lyckas i din trädgård.',
       imageUrl: null,
       icon: '⚱',
-      link: {linkType: 'href', href: '/butik'},
+      link: { linkType: 'href', href: '/butik' },
     },
     {
       _key: 'jord-jordkompisar',
@@ -72,7 +73,7 @@ export default async function Page() {
       description: 'Brett utbud av jordar och kompisar som bidrar med ny kraft till trötta jordar.',
       imageUrl: null,
       icon: '❦',
-      link: {linkType: 'href', href: '/butik'},
+      link: { linkType: 'href', href: '/butik' },
     },
     {
       _key: 'inredning-presentartiklar',
@@ -80,14 +81,14 @@ export default async function Page() {
       description: 'Noga utvalt sortiment av krukor, vaser, ätbart och diverse vackra ting.',
       imageUrl: null,
       icon: '✦',
-      link: {linkType: 'href', href: '/butik'},
+      link: { linkType: 'href', href: '/butik' },
     },
   ]
   const assortmentItems =
     settings?.assortmentItems && settings.assortmentItems.length > 0
       ? settings.assortmentItems
       : fallbackAssortmentItems
-  
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* HERO SECTION WITH VIDEO */}
@@ -102,38 +103,56 @@ export default async function Page() {
         >
           <source src={heroVideoUrl} type="video/mp4" />
         </video>
-        
+
         {/* Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/50 z-0"></div>
 
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-10">
           {/* LOGO IN HERO */}
           <div className="relative w-[300px] h-[150px] md:w-[500px] md:h-[250px] mx-auto drop-shadow-2xl">
-            <Image 
-              src="/images/logo.webp" 
-              alt="Rotens Trädgård" 
-              fill 
+            <Image
+              src="/images/logo.webp"
+              alt="Rotens Trädgård"
+              fill
               className="object-contain"
               priority
             />
           </div>
-          
+
           <p className="text-xl md:text-3xl font-light tracking-wide text-white/90 max-w-2xl mx-auto drop-shadow-md font-serif italic">
             En handelsträdgård i hjärtat av Dalarna.
           </p>
           <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link 
-              href="#events" 
+            <Link
+              href="#events"
               className="px-8 py-4 bg-white text-brand-dark font-medium uppercase tracking-widest text-sm hover:bg-brand-accent transition-colors duration-300 shadow-lg"
             >
               På gång
             </Link>
-            <Link 
-              href="/om-oss" 
+            <Link
+              href="/om-oss"
               className="px-8 py-4 border border-white text-white font-medium uppercase tracking-widest text-sm hover:bg-white/10 transition-colors duration-300 backdrop-blur-sm"
             >
               Hitta hit
             </Link>
+          </div>
+
+          {/* OPENING HOURS MINI */}
+          <div className="text-white/80 text-[11px] md:text-xs font-medium uppercase tracking-widest space-y-1">
+            {parsedCustomOpeningHours.length > 0 ? (
+              parsedCustomOpeningHours.map((entry: any, i: number) => (
+                <div key={i}>
+                  <span className="opacity-70 mr-2">{entry.label}:</span>
+                  {entry.value && <span>{entry.value}</span>}
+                </div>
+              ))
+            ) : (
+              <div className="flex flex-col md:flex-row gap-x-6 gap-y-1 justify-center items-center">
+                <span><span className="opacity-70 mr-1">Vardagar</span> {openingHours.weekdays}</span>
+                <span><span className="opacity-70 mr-1">Lördag</span> {openingHours.saturday}</span>
+                <span><span className="opacity-70 mr-1">Söndag</span> {openingHours.sunday}</span>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -142,13 +161,19 @@ export default async function Page() {
       <section className="py-20 md:py-32 bg-stone-50 text-center">
         <div className="container mx-auto px-6 max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-8">
-            En plats för växande och inspiration
+            Det här är Rotens
           </h2>
-          <p className="text-lg text-stone-600 leading-relaxed mb-10">
-            Välkommen till en handelsträdgård där kunskap och kvalitet står i fokus. 
-            Vi har ett brett sortiment av växter anpassade för vårt klimat, 
-            vackra krukor och inredning för både ute och inne.
+          <p className="text-lg text-stone-600 leading-relaxed mb-6">
+            I vår handelsträdgård på Skovägen 8 i Bjursås (mellan Falun och Rättvik) hittar
+            du egenodlade och härdiga växter, självplock av blommor och ett brett utbud för
+            hem och trädgård med fokus på miljövänliga val och hållbar kvalitet.
           </p>
+          <p className="text-lg text-stone-600 leading-relaxed mb-10">
+            Under året fylls platsen av kurser och evenemang där trädgård, konst och
+            kultur möts i en familjär miljö som inspirerar till liv, glädje och
+            välmående.
+          </p>
+
           <div className="flex flex-col items-center gap-4 mb-10">
             <p className="text-sm uppercase tracking-[0.3em] text-stone-500">Följ vår resa</p>
             <div className="flex items-center gap-4">
@@ -160,7 +185,7 @@ export default async function Page() {
                 rel="noreferrer"
               >
                 <svg viewBox="0 0 16 16" className="w-6 h-6" fill="currentColor" aria-hidden="true">
-                  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                  <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" />
                 </svg>
               </a>
               <a
@@ -181,64 +206,28 @@ export default async function Page() {
       </section>
 
       {/* HANDELSTRADGARD SECTION */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm shadow-lg bg-stone-100">
-            <Image
-              src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=1600&auto=format&fit=crop"
-              alt="Sommarkafé på Rotens Trädgård"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-          <div className="space-y-5">
-            <h2 className="text-3xl md:text-4xl font-serif text-brand-dark">
-              Välkommen till vår handelsträdgård!
-            </h2>
-            <p className="text-lg text-stone-600 leading-relaxed">
-              I vår handelsträdgård, på Skovägen 8 mellan Falun och Rättvik, hittar du
-              egenodlade och härdiga växter, självplock av blommor och ett brett utbud
-              för hem och trädgård med fokus på miljövänliga val och hållbar kvalitet.
-            </p>
-            <p className="text-lg text-stone-600 leading-relaxed">
-              Under året fylls platsen av kurser och evenemang där trädgård, konst och
-              kultur möts i en familjär miljö som inspirerar till liv, glädje och
-              välmående.
-            </p>
-            <div>
-              <Link
-                href="/om-oss"
-                className="inline-block px-8 py-3 border border-brand text-brand hover:bg-brand hover:text-white transition-colors uppercase tracking-widest text-sm font-medium"
-              >
-                Om oss
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* EVENTS SECTION (Dynamic) */}
       <section id="events" className="py-20 bg-stone-100 scroll-mt-20">
         <div className="container mx-auto px-6">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif text-brand-dark mb-2">På gång</h2>
-              <p className="text-stone-600">Workshops, föreläsningar och marknadsdagar.</p>
-            </div>
-          </div>
-          
+
+
           {/* Use Sanity data if available, otherwise show message or fallback */}
           <EventList events={events.map((e: any) => ({
-              id: e._id,
-              title: e.title,
-              slug: e.slug,
-              date: e.date,
-              image: e.image, // Ensure your EventList handles undefined images if needed
-              bookingUrl: e.bookingUrl || '#'
-            }))} />
+            id: e._id,
+            title: e.title,
+            slug: e.slug,
+            date: e.date,
+            image: e.image, // Ensure your EventList handles undefined images if needed
+            bookingUrl: e.bookingUrl || '#'
+          }))} />
         </div>
       </section>
+
+
+      {/* NEWSLETTER SECTION */}
+      <Newsletter />
 
       {/* GRID SECTION (Categories) */}
       <section className="py-20 pb-24 bg-white">
@@ -278,14 +267,6 @@ export default async function Page() {
                 </>
               )
 
-              if (item?.link) {
-                return (
-                  <ResolvedLink key={key} link={item.link} className="group cursor-pointer">
-                    {cardContent}
-                  </ResolvedLink>
-                )
-              }
-
               return (
                 <div key={key} className="group">
                   {cardContent}
@@ -295,6 +276,9 @@ export default async function Page() {
           </div>
         </div>
       </section>
+
+      {/* NEWSLETTER SECTION */}
+
 
       {/* INFO / CTA SECTION */}
       <section id="hours" className="py-20 bg-brand-dark text-white">
@@ -316,12 +300,12 @@ export default async function Page() {
               </p>
             </div>
           </div>
-          
+
           <div className="bg-white/5 p-8 md:p-12 border border-white/10 rounded-sm">
             <h3 className="text-2xl font-serif text-white mb-6">Öppettider</h3>
             {parsedCustomOpeningHours.length > 0 ? (
               <ul className="space-y-3 text-lg font-light">
-                {parsedCustomOpeningHours.map((entry, index: number) => {
+                {parsedCustomOpeningHours.map((entry: any, index: number) => {
                   const isLast = index === parsedCustomOpeningHours.length - 1
                   const borderClass = isLast ? '' : 'border-b border-white/10'
 
@@ -366,6 +350,6 @@ export default async function Page() {
           </div>
         </div>
       </section>
-    </div>
+    </div >
   )
 }

@@ -1,5 +1,5 @@
-import {NextResponse} from 'next/server'
-import {Resend} from 'resend'
+import { NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 type ContactPayload = {
   name: string
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     const payload = (await request.json()) as ContactPayload
 
     if (!payload || typeof payload !== 'object') {
-      return NextResponse.json({error: 'Invalid payload'}, {status: 400})
+      return NextResponse.json({ error: 'Invalid payload' }, { status: 400 })
     }
 
     const name = (payload.name || '').trim()
@@ -44,21 +44,22 @@ export async function POST(request: Request) {
     const message = (payload.message || '').trim()
 
     if (!name || !email || !message) {
-      return NextResponse.json({error: 'Missing required fields'}, {status: 400})
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
     if (!isValidEmail(email)) {
-      return NextResponse.json({error: 'Invalid email'}, {status: 400})
+      return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
     }
 
     if (message.length < 10) {
-      return NextResponse.json({error: 'Message too short'}, {status: 400})
+      return NextResponse.json({ error: 'Message too short' }, { status: 400 })
     }
 
     const to = getEnv('CONTACT_TO_EMAIL')
     const from = getEnv('CONTACT_FROM_EMAIL')
 
-    const subject = `Kontaktformulär: ${name}`
+    // Subject line optimized for Gmail filtering/labels
+    const subject = `[Rotens Kontakt] ${payload.category || 'Allmänt'} - ${name}`
     const bodyLines = [
       `Namn: ${name}`,
       `E-post: ${email}`,
@@ -85,9 +86,9 @@ export async function POST(request: Request) {
       text: bodyLines.join('\n'),
     })
 
-    return NextResponse.json({ok: true})
+    return NextResponse.json({ ok: true })
   } catch (error) {
     console.error('Contact form error', error)
-    return NextResponse.json({error: 'Failed to send'}, {status: 500})
+    return NextResponse.json({ error: 'Failed to send' }, { status: 500 })
   }
 }

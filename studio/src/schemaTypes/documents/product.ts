@@ -1,5 +1,5 @@
-import {BasketIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { BasketIcon } from '@sanity/icons'
+import { defineField, defineType } from 'sanity'
 
 export const product = defineType({
   name: 'product',
@@ -41,6 +41,16 @@ export const product = defineType({
       description: 'Check this if the product is for pre-order (delivery later)',
       initialValue: false,
     }),
+    defineField({
+      name: 'tags',
+      title: 'Taggar / Kategorier',
+      description: 'T.ex. "Blombud", "Växt", "Övrigt". Används för filtrering i butiken.',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+    }),
   ],
   preview: {
     select: {
@@ -49,7 +59,7 @@ export const product = defineType({
       media: 'image',
       isPreOrder: 'isPreOrder',
     },
-    prepare({title, price, media, isPreOrder}) {
+    prepare({ title, price, media, isPreOrder }) {
       return {
         title,
         subtitle: `${price} kr ${isPreOrder ? '(Förboka)' : ''}`,
