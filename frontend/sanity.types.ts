@@ -220,6 +220,7 @@ export type Product = {
   _createdAt: string
   _updatedAt: string
   _rev: string
+  orderRank?: string
   title: string
   price: number
   image: {
@@ -231,6 +232,8 @@ export type Product = {
   }
   stripeUrl?: string
   isPreOrder?: boolean
+  bestBefore?: string
+  tags?: Array<string>
 }
 
 export type Event = {
@@ -336,7 +339,6 @@ export type Settings = {
       crop?: SanityImageCrop
       _type: 'image'
     }
-    link?: Link
     _key: string
   }>
   description?: string
@@ -717,7 +719,7 @@ export type EventQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: productsQuery
-// Query: *[_type == "product"] | order(title asc) {    _id,    title,    price,    "image": image.asset->url,    stripeUrl,    isPreOrder,    tags  }
+// Query: *[    _type == "product" &&    (      !defined(bestBefore) ||      dateTime(bestBefore + "T23:59:59Z") >= dateTime(now())    )  ] | order(coalesce(orderRank, "~") asc, title asc) {    _id,    title,    price,    "image": image.asset->url,    stripeUrl,    isPreOrder,    tags  }
 export type ProductsQueryResult = Array<{
   _id: string
   title: string
@@ -725,7 +727,7 @@ export type ProductsQueryResult = Array<{
   image: string | null
   stripeUrl: string | null
   isPreOrder: boolean | null
-  tags: null
+  tags: Array<string> | null
 }>
 
 // Source: sanity/lib/queries.ts
@@ -907,7 +909,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "settings"][0] {\n    ...,\n    "heroVideoUrl": heroVideo.asset->url,\n    "assortmentItems": assortmentItems[]{\n      _key,\n      title,\n      description,\n      "imageUrl": image.asset->url\n    }\n  }\n': SettingsQueryResult
     '\n  *[_type == "event"] | order(date asc) {\n    _id,\n    title,\n    slug,\n    date,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventsQueryResult
     '\n  *[_type == "event" && slug.current == $slug][0] {\n    _id,\n    title,\n    slug,\n    date,\n    price,\n    description,\n    "image": image.asset->url,\n    bookingUrl\n  }\n': EventQueryResult
-    '\n  *[_type == "product"] | order(title asc) {\n    _id,\n    title,\n    price,\n    "image": image.asset->url,\n    stripeUrl,\n    isPreOrder,\n    tags\n  }\n': ProductsQueryResult
+    '\n  *[\n    _type == "product" &&\n    (\n      !defined(bestBefore) ||\n      dateTime(bestBefore + "T23:59:59Z") >= dateTime(now())\n    )\n  ] | order(coalesce(orderRank, "~") asc, title asc) {\n    _id,\n    title,\n    price,\n    "image": image.asset->url,\n    stripeUrl,\n    isPreOrder,\n    tags\n  }\n': ProductsQueryResult
     '\n  *[_type == "page" && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        link {\n          ...,\n          _type == "link" => {\n            ...,\n            "page": page->slug.current,\n            "post": post->slug.current\n          }\n        }\n      },\n      _type == "infoSection" => {\n        ...\n      },\n    }\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PagesSlugsResult
     '\n  *[_type == "post" && defined(slug.current)]{\n    "slug": slug.current\n  }\n': PostPagesSlugsResult

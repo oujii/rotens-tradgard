@@ -1,4 +1,5 @@
 import { BasketIcon } from '@sanity/icons'
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 import { defineField, defineType } from 'sanity'
 
 export const product = defineType({
@@ -6,7 +7,9 @@ export const product = defineType({
   title: 'Product',
   type: 'document',
   icon: BasketIcon,
+  orderings: [orderRankOrdering],
   fields: [
+    orderRankField({ type: 'product' }),
     defineField({
       name: 'title',
       title: 'Title',
@@ -40,6 +43,15 @@ export const product = defineType({
       type: 'boolean',
       description: 'Check this if the product is for pre-order (delivery later)',
       initialValue: false,
+    }),
+    defineField({
+      name: 'bestBefore',
+      title: 'Bäst före',
+      type: 'date',
+      description: 'Produkten döljs automatiskt i webbutiken efter detta datum. Lämna tomt för att alltid visa produkten.',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+      },
     }),
     defineField({
       name: 'tags',

@@ -220,6 +220,7 @@ export type Product = {
   _createdAt: string
   _updatedAt: string
   _rev: string
+  orderRank?: string
   title: string
   price: number
   image: {
@@ -231,6 +232,8 @@ export type Product = {
   }
   stripeUrl?: string
   isPreOrder?: boolean
+  bestBefore?: string
+  tags?: Array<string>
 }
 
 export type Event = {
@@ -336,7 +339,6 @@ export type Settings = {
       crop?: SanityImageCrop
       _type: 'image'
     }
-    link?: Link
     _key: string
   }>
   description?: string

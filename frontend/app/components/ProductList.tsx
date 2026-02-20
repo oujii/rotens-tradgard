@@ -17,11 +17,11 @@ interface ProductListProps {
     products: Product[]
 }
 
-type SortOption = 'newest' | 'price-asc' | 'price-desc' | 'title-asc'
+type SortOption = 'custom' | 'price-asc' | 'price-desc' | 'title-asc'
 
 export default function ProductList({ products }: ProductListProps) {
     const [activeTag, setActiveTag] = useState<string>('Alla')
-    const [sortBy, setSortBy] = useState<SortOption>('newest')
+    const [sortBy, setSortBy] = useState<SortOption>('custom')
 
     // Extract all unique tags
     const tags = useMemo(() => {
@@ -48,7 +48,7 @@ export default function ProductList({ products }: ProductListProps) {
                     return b.price - a.price
                 case 'title-asc':
                     return a.title.localeCompare(b.title)
-                default: // newest (fallback to original order or explicit date if available, here just original)
+                default: // keep manual order from Sanity
                     return 0
             }
         })
@@ -88,7 +88,7 @@ export default function ProductList({ products }: ProductListProps) {
                         onChange={(e) => setSortBy(e.target.value as SortOption)}
                         className="bg-transparent border-none text-brand-dark text-sm font-medium focus:ring-0 cursor-pointer"
                     >
-                        <option value="newest">Senaste</option>
+                        <option value="custom">Vald ordning</option>
                         <option value="price-asc">Pris: Lägsta först</option>
                         <option value="price-desc">Pris: Högsta först</option>
                         <option value="title-asc">A-Ö</option>
@@ -115,7 +115,7 @@ export default function ProductList({ products }: ProductListProps) {
                                 {product.isPreOrder && (
                                     <div className="absolute top-4 right-4 z-10">
                                         <span className="bg-brand-dark/90 text-accent-pop text-[10px] font-bold px-3 py-1.5 uppercase tracking-widest backdrop-blur-md shadow-lg rounded-sm">
-                                            Leverans i vår
+                                            För upphämtning
                                         </span>
                                     </div>
                                 )}

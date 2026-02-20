@@ -1,11 +1,11 @@
 import Image from 'next/image'
 
 import ResolvedLink from '@/app/components/ResolvedLink'
-import {sanityFetch} from '@/sanity/lib/live'
-import {servicesPageQuery} from '@/sanity/lib/queries'
+import { sanityFetch } from '@/sanity/lib/live'
+import { servicesPageQuery } from '@/sanity/lib/queries'
 
 export default async function TjansterPage() {
-  const {data: servicesPage} = await sanityFetch({query: servicesPageQuery})
+  const { data: servicesPage } = await sanityFetch({ query: servicesPageQuery })
 
   const fallbackServices = [
     {
@@ -17,7 +17,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Skicka växtförfrågan',
-      href: {linkType: 'href', href: '/kontakt?val=vaxtbestallning'},
+      href: { linkType: 'href', href: '/kontakt?val=vaxtbestallning' },
     },
     {
       title: 'Personlig rådgivning',
@@ -28,7 +28,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1416870213410-d93130d2268b?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Boka rådgivning',
-      href: {linkType: 'href', href: '/kontakt?val=radgivning'},
+      href: { linkType: 'href', href: '/kontakt?val=radgivning' },
     },
     {
       title: 'Beskärning & Skötsel',
@@ -39,7 +39,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1599591037488-8260408f657d?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Boka beskärning',
-      href: {linkType: 'href', href: '/kontakt?val=beskaring-skotsel'},
+      href: { linkType: 'href', href: '/kontakt?val=beskaring-skotsel' },
     },
     {
       title: 'Binderi & Floristik',
@@ -50,7 +50,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1526047932273-341f2a7631f9?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Kontakta binderi',
-      href: {linkType: 'href', href: '/kontakt?val=binderier'},
+      href: { linkType: 'href', href: '/kontakt?val=binderier' },
     },
     {
       title: 'Workshop & Föreläsningar',
@@ -61,7 +61,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Boka workshop',
-      href: {linkType: 'href', href: '/kontakt?val=workshop-forelasningar'},
+      href: { linkType: 'href', href: '/kontakt?val=workshop-forelasningar' },
     },
     {
       title: 'Fest & Konferens',
@@ -72,7 +72,7 @@ export default async function TjansterPage() {
       image:
         'https://images.unsplash.com/photo-1515165562835-c4cfa5ca4e0e?q=80&w=1200&auto=format&fit=crop',
       ctaLabel: 'Skicka förfrågan',
-      href: {linkType: 'href', href: '/kontakt?val=fest-konferens'},
+      href: { linkType: 'href', href: '/kontakt?val=fest-konferens' },
     },
   ]
 
@@ -135,27 +135,21 @@ export default async function TjansterPage() {
                       {service.title}
                     </h2>
                     {summaryText && (
-                      <p
-                        className="text-stone-600 leading-relaxed"
-                        style={{
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
-                        }}
-                      >
+                      <p className="text-stone-600 leading-relaxed line-clamp-2 group-open:line-clamp-none">
                         {summaryText}
                       </p>
                     )}
                     <span className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-stone-500 group-hover:text-brand-dark transition-colors">
-                      Läs mer
-                      <span className="text-lg leading-none">+</span>
+                      <span className="group-open:hidden">Läs mer</span>
+                      <span className="hidden group-open:inline">Visa mindre</span>
+                      <span className="text-lg leading-none group-open:hidden">+</span>
+                      <span className="text-lg leading-none hidden group-open:inline">-</span>
                     </span>
                   </div>
                 </summary>
                 <div className="px-6 pb-6 pt-4 border-t border-stone-100">
                   <div className="space-y-4">
-                    {detailText && (
+                    {detailText && detailText !== summaryText && (
                       <p className="text-stone-600 leading-relaxed">{detailText}</p>
                     )}
                     {service.ctaLabel && service.href && (

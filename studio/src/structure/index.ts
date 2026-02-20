@@ -1,4 +1,5 @@
-import {CogIcon} from '@sanity/icons'
+import {BasketIcon, CogIcon} from '@sanity/icons'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 import pluralize from 'pluralize-esm'
 
@@ -8,12 +9,19 @@ import pluralize from 'pluralize-esm'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'servicesPage', 'assist.instruction.context']
+const DISABLED_TYPES = ['settings', 'servicesPage', 'assist.instruction.context', 'product']
 
-export const structure: StructureResolver = (S: StructureBuilder) =>
+export const structure: StructureResolver = (S: StructureBuilder, context) =>
   S.list()
     .title('Website Content')
     .items([
+      orderableDocumentListDeskItem({
+        type: 'product',
+        title: 'Produkter (sorterbara)',
+        icon: BasketIcon,
+        S,
+        context,
+      }),
       ...S.documentTypeListItems()
         // Remove the "assist.instruction.context" and "settings" content  from the list of content types
         .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()))

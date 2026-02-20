@@ -38,7 +38,13 @@ export const eventQuery = defineQuery(`
 `)
 
 export const productsQuery = defineQuery(`
-  *[_type == "product"] | order(title asc) {
+  *[
+    _type == "product" &&
+    (
+      !defined(bestBefore) ||
+      dateTime(bestBefore + "T23:59:59Z") >= dateTime(now())
+    )
+  ] | order(coalesce(orderRank, "~") asc, title asc) {
     _id,
     title,
     price,

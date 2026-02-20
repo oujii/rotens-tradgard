@@ -120,7 +120,7 @@ export default async function Page() {
           </div>
 
           <p className="text-xl md:text-3xl font-light tracking-wide text-white/90 max-w-2xl mx-auto drop-shadow-md font-serif italic">
-            En handelsträdgård i hjärtat av Dalarna.
+            Din handelsträdgård i hjärtat av Dalarna.
           </p>
           <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
