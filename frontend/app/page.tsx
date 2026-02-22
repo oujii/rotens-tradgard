@@ -166,12 +166,14 @@ export default async function Page() {
           <p className="text-lg text-stone-600 leading-relaxed mb-6">
             I vår handelsträdgård på Skovägen 8 i Bjursås (mellan Falun och Rättvik) hittar
             du egenodlade och härdiga växter, självplock av blommor och ett brett utbud för
-            hem och trädgård med fokus på miljövänliga val och hållbar kvalitet.
+            hem och trädgård med fokus på miljövänliga val och hållbar kvalitet. Under året
+            fylls platsen av kurser och evenemang där trädgård, konst och kultur möts i en
+            familjär miljö som inspirerar till liv, glädje och välmående.
           </p>
           <p className="text-lg text-stone-600 leading-relaxed mb-10">
-            Under året fylls platsen av kurser och evenemang där trädgård, konst och
-            kultur möts i en familjär miljö som inspirerar till liv, glädje och
-            välmående.
+            Rotens gänget står även redo att hjälpa dig med din trädgård.
+            Trädgårdsrådgivning, beskärning, trädgårdsskötsel, planering och plantering,
+            kontakta oss så berättar vi mer!
           </p>
 
           <div className="flex flex-col items-center gap-4 mb-10">

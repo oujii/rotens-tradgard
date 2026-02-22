@@ -21,12 +21,39 @@ const CATEGORY_OPTIONS: CategoryOption[] = [
 ]
 
 const CATEGORY_VALUES = new Set(CATEGORY_OPTIONS.map((option) => option.value))
+const CATEGORY_ALIASES: Record<string, string> = {
+  allmant: 'allmant',
+  'allman-fraga': 'allmant',
+  allmanfraga: 'allmant',
+  vaxtbestallning: 'vaxtbestallning',
+  vaxter: 'vaxtbestallning',
+  radgivning: 'radgivning',
+  beskaring: 'beskaring-skotsel',
+  skotsel: 'beskaring-skotsel',
+  'beskaring-skotsel': 'beskaring-skotsel',
+  binderier: 'binderier',
+  binderi: 'binderier',
+  floristik: 'binderier',
+  'workshop-forelasningar': 'workshop-forelasningar',
+  workshop: 'workshop-forelasningar',
+  forelasningar: 'workshop-forelasningar',
+  forelasning: 'workshop-forelasningar',
+  'fest-konferens': 'fest-konferens',
+  fest: 'fest-konferens',
+  konferens: 'fest-konferens',
+}
+
+function resolveCategoryParam(value: string | null) {
+  if (!value) return 'allmant'
+  const normalized = value.trim().toLowerCase()
+  return CATEGORY_ALIASES[normalized] || (CATEGORY_VALUES.has(normalized) ? normalized : 'allmant')
+}
 
 function ContactForm() {
   const searchParams = useSearchParams()
-  const rawCategory = searchParams.get('val')
-  const initialCategory =
-    rawCategory && CATEGORY_VALUES.has(rawCategory) ? rawCategory : 'allmant'
+  const initialCategory = resolveCategoryParam(
+    searchParams.get('val') ?? searchParams.get('category'),
+  )
 
   const [category, setCategory] = useState(initialCategory)
   const [status, setStatus] = useState<Status>('idle')
@@ -41,12 +68,10 @@ function ContactForm() {
 
   // Update category if URL changes
   useEffect(() => {
-    const val = searchParams.get('val')
-    if (val && CATEGORY_VALUES.has(val)) {
-      setCategory(val)
-      return
-    }
-    if (!val) setCategory('allmant')
+    const nextCategory = resolveCategoryParam(
+      searchParams.get('val') ?? searchParams.get('category'),
+    )
+    setCategory(nextCategory)
   }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

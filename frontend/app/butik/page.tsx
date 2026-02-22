@@ -12,7 +12,7 @@ export default async function ButikPage() {
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl md:text-6xl font-serif mb-4 text-white">Webbutik och förbokning</h1>
           <p className="text-brand-accent text-lg font-light max-w-2xl mx-auto">
-            Här kan du beställa blombud och förboka växter till din trädgård. Vi rådger gärna kring växtval som kan passa just hos dig.
+            Här kan du beställa blombud och förboka växter till din trädgård. Vi rådger gärna kring växtval som kan passa just hos dig. Detta är bara ett urval — maila oss gärna om du önskar något specifikt!
           </p>
         </div>
       </div>
