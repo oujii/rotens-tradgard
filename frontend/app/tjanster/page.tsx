@@ -1,8 +1,15 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 
 import ResolvedLink from '@/app/components/ResolvedLink'
 import { sanityFetch } from '@/sanity/lib/live'
 import { servicesPageQuery } from '@/sanity/lib/queries'
+
+export const metadata: Metadata = {
+  title: 'Tjänster',
+  description:
+    'Trädgårdstjänster från Rotens Trädgård i Bjursås. Rådgivning, beskärning, binderi och floristik, workshops, föreläsningar och gröna konferenser i Dalarna.',
+}
 
 export default async function TjansterPage() {
   const { data: servicesPage } = await sanityFetch({ query: servicesPageQuery })

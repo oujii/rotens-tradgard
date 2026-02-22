@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
 import { settingsQuery } from '@/sanity/lib/queries'
+
+export const metadata: Metadata = {
+  title: 'Om oss',
+  description:
+    'Lär känna Rotens Trädgård i Bjursås. Handelsträdgård sedan 1940-talet med fokus på lokalt, härdigt och hållbart – trädgård, konst och kultur i Dalarna.',
+}
 
 export default async function OmOssPage() {
   const { data: settings } = await sanityFetch({ query: settingsQuery })

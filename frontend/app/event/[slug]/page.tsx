@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
@@ -5,9 +6,41 @@ import { format } from 'date-fns'
 import { sv } from 'date-fns/locale'
 import { PortableText } from '@portabletext/react'
 import { sanityFetch } from '@/sanity/lib/live'
-import { eventQuery } from '@/sanity/lib/queries'
+import { eventQuery, eventsQuery } from '@/sanity/lib/queries'
 
-export default async function EventPage({ params }: { params: Promise<{ slug: string }> }) {
+type Props = { params: Promise<{ slug: string }> }
+
+export async function generateStaticParams() {
+  const { data: events } = await sanityFetch({
+    query: eventsQuery,
+    perspective: 'published',
+    stega: false,
+  })
+  return events.map((e: any) => ({ slug: e.slug?.current || e.slug }))
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params
+  const { data: event } = await sanityFetch({
+    query: eventQuery,
+    params: { slug },
+    stega: false,
+  })
+
+  if (!event) return {}
+
+  const dateStr = event.date
+    ? format(new Date(event.date), "d MMMM yyyy", { locale: sv })
+    : ''
+
+  return {
+    title: event.title,
+    description: `${event.title}${dateStr ? ` – ${dateStr}` : ''} på Rotens Trädgård i Bjursås.${event.price ? ` Pris: ${event.price}.` : ''}`,
+    openGraph: event.image ? { images: [{ url: event.image }] } : undefined,
+  }
+}
+
+export default async function EventPage({ params }: Props) {
   const { slug } = await params
   const { data: event } = await sanityFetch({ 
     query: eventQuery, 
@@ -54,10 +87,39 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     )
   }
 
+  const eventJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: event.title,
+    startDate: event.date,
+    ...(event.image && { image: event.image }),
+    ...(event.price && { offers: { '@type': 'Offer', price: event.price, priceCurrency: 'SEK' } }),
+    location: {
+      '@type': 'Place',
+      name: 'Rotens Trädgård',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Skovägen 8',
+        addressLocality: 'Bjursås',
+        postalCode: '790 21',
+        addressCountry: 'SE',
+      },
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'Rotens Trädgård',
+      url: 'https://www.rotenstradgard.se',
+    },
+  }
+
   return (
     <div className="pt-24 min-h-screen bg-stone-50 pb-20">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+      />
       <div className="container mx-auto px-6 max-w-4xl">
-        
+
         {/* Breadcrumb / Back Link */}
         <div className="py-6">
           <Link href="/" className="text-sm font-medium text-stone-500 hover:text-brand transition-colors">

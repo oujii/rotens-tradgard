@@ -1,7 +1,14 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import ProductList from '@/app/components/ProductList'
 import { sanityFetch } from '@/sanity/lib/live'
 import { productsQuery } from '@/sanity/lib/queries'
+
+export const metadata: Metadata = {
+  title: 'Webbutik',
+  description:
+    'Beställ blombud och förboka växter från Rotens Trädgård i Bjursås. Lokalt odlade växter, blommor och trädgårdsprodukter med leverans i Dalarna.',
+}
 
 export default async function ButikPage() {
   const { data: products } = await sanityFetch({ query: productsQuery })

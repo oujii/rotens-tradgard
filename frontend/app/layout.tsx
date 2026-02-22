@@ -31,12 +31,19 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const ogImage = resolveOpenGraphImage(settings?.ogImage)
   return {
+    metadataBase: new URL('https://www.rotenstradgard.se'),
+    alternates: {
+      canonical: './',
+    },
     title: {
       template: `%s | ${title}`,
       default: title,
     },
     description: typeof description === 'string' ? description : toPlainText(description),
     openGraph: {
+      locale: 'sv_SE',
+      type: 'website',
+      siteName: title,
       images: ogImage ? [ogImage] : [],
     },
   }
@@ -61,10 +68,44 @@ export default async function RootLayout({children}: {children: React.ReactNode}
 
   return (
     <html
-      lang="en"
+      lang="sv"
       className={`${josefinSans.variable} ${ibmPlexMono.variable} bg-stone-50 text-stone-900`}
     >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'LocalBusiness',
+              '@id': 'https://www.rotenstradgard.se',
+              name: 'Rotens Trädgård',
+              description:
+                'Handelsträdgård i Bjursås, Dalarna. Egenodlade växter, blommor, trädgårdstjänster, café och evenemang sedan 1940-talet.',
+              url: 'https://www.rotenstradgard.se',
+              telephone: '+46737384853',
+              email: 'info@rotenstradgard.se',
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Skovägen 8',
+                addressLocality: 'Bjursås',
+                postalCode: '790 21',
+                addressRegion: 'Dalarna',
+                addressCountry: 'SE',
+              },
+              geo: {
+                '@type': 'GeoCoordinates',
+                latitude: 61.0167,
+                longitude: 15.45,
+              },
+              image: 'https://www.rotenstradgard.se/images/logo.webp',
+              sameAs: [
+                'https://www.instagram.com/rotenstradgard/',
+                'https://www.facebook.com/rotenstradgard/',
+              ],
+            }),
+          }}
+        />
         <section className="min-h-screen pt-20">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           {isDraftMode && (
