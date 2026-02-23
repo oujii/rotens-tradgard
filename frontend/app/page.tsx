@@ -319,6 +319,7 @@ export default async function Page() {
                         alt="Rotens Trädgård på TripAdvisor"
                         width={180}
                         height={40}
+                        style={{ filter: 'brightness(0) invert(1)' }}
                       />
                     </a>
                   </li>
