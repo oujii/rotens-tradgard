@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
-import Script from 'next/script'
 import { sanityFetch } from '@/sanity/lib/live'
 import { settingsQuery, eventsQuery } from '@/sanity/lib/queries'
 import EventList from '@/app/components/EventList'
@@ -301,34 +300,6 @@ export default async function Page() {
                 <strong className="block text-accent-pop uppercase tracking-wider text-sm mb-1">E-post</strong>
                 {contactInfo.email}
               </p>
-            </div>
-
-            {/* TripAdvisor Widget */}
-            <div className="mt-8 pt-6 border-t border-white/10">
-              <div id="TA_cdswritereviewlg174" className="TA_cdswritereviewlg">
-                <ul id="vcXr0uFGW" className="TA_links kYjkbWK3">
-                  <li id="G7UFVEk4H" className="tripadvisor-link">
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href="https://www.tripadvisor.com/Attraction_Review-g4413994-d32960499-Reviews-Rotens_Tradgard-Bjursas_Falun_Municipality_Dalarna_County.html"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg"
-                        alt="Rotens Trädgård på TripAdvisor"
-                        width={180}
-                        height={40}
-                        style={{ filter: 'brightness(0) invert(1)' }}
-                      />
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <Script
-                src="https://www.jscache.com/wejs?wtype=cdswritereviewlg&uniq=174&locationId=32960499&lang=sv_SE&display_version=2"
-                strategy="lazyOnload"
-              />
             </div>
           </div>
 

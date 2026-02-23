@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import Link from 'next/link'
 import Image from 'next/image'
 import { sanityFetch } from '@/sanity/lib/live'
@@ -182,6 +183,34 @@ export default async function OmOssPage() {
               "Tillsammans med er vill vi skapa en trädgård full av liv och glädje!"
             </p>
           </div>
+        </div>
+
+        {/* TRIPADVISOR */}
+        <div className="mt-20 text-center">
+          <div id="TA_cdswritereviewlg174" className="TA_cdswritereviewlg">
+            <ul id="vcXr0uFGW" className="TA_links kYjkbWK3 list-none p-0">
+              <li id="G7UFVEk4H">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="https://www.tripadvisor.se/Attraction_Review-g4413994-d32960499-Reviews-Rotens_Tradgard-Bjursas_Falun_Municipality_Dalarna_County.html"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://static.tacdn.com/img2/brand_refresh/Tripadvisor_lockup_horizontal_secondary_registered.svg"
+                    alt="Rotens Trädgård på TripAdvisor"
+                    width={200}
+                    height={44}
+                    className="mx-auto"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+          <Script
+            src="https://www.jscache.com/wejs?wtype=cdswritereviewlg&uniq=174&locationId=32960499&lang=sv_SE&display_version=2"
+            strategy="lazyOnload"
+          />
         </div>
 
         {/* MAP PLACEHOLDER */}
