@@ -6,10 +6,9 @@ import {useEffect, useState} from 'react'
 import {usePathname} from 'next/navigation'
 
 function useIsTranslated() {
-  const [isTranslated, setIsTranslated] = useState(false)
-  useEffect(() => {
-    setIsTranslated(window.location.hostname.includes('translate.goog'))
-  }, [])
+  const [isTranslated] = useState(
+    () => typeof window !== 'undefined' && window.location.hostname.includes('translate.goog')
+  )
   return isTranslated
 }
 
@@ -33,7 +32,7 @@ function NavLink({
 }) {
   if (forceReload) {
     return (
-      <a href={href} className={className} onClick={onClick}>
+      <a href={getTranslateUrl(href)} className={className} onClick={onClick}>
         {children}
       </a>
     )
