@@ -51,6 +51,15 @@ export default function Header() {
                   Kontakt
                 </Link>
               </li>
+              <li>
+                <a
+                  href="https://rotenstradgard-se.translate.goog/?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp&_x_tr_hist=true"
+                  className="text-stone-400 hover:text-brand-dark transition-colors text-[10px] tracking-[0.2em]"
+                  title="View in English"
+                >
+                  EN
+                </a>
+              </li>
             </ul>
           </nav>
 
@@ -118,6 +127,15 @@ export default function Header() {
                 >
                   Kontakt
                 </Link>
+              </li>
+              <li className="pt-2">
+                <a
+                  href="https://rotenstradgard-se.translate.goog/?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp&_x_tr_hist=true"
+                  className="block text-center py-3 text-stone-400 hover:text-brand-dark transition-colors text-[10px] tracking-[0.2em]"
+                  title="View in English"
+                >
+                  EN
+                </a>
               </li>
             </ul>
           </nav>

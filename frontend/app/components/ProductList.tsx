@@ -139,7 +139,7 @@ export default function ProductList({ products }: ProductListProps) {
                                     <span className="text-xl font-medium text-stone-800 tracking-tight">{product.price} kr</span>
                                     {product.stripeUrl ? (
                                         <a
-                                            href={product.stripeUrl}
+                                            href={`${product.stripeUrl}${product.stripeUrl.includes('?') ? '&' : '?'}locale=sv`}
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="inline-flex items-center px-6 py-3 bg-brand text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-brand-dark hover:shadow-lg transition-all transform group-hover:translate-y-[-2px]"
