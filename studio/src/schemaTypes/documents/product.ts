@@ -2,6 +2,8 @@ import { BasketIcon } from '@sanity/icons'
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 import { defineField, defineType } from 'sanity'
 
+import { isStripeTestUrl } from '../../lib/stripe'
+
 export const product = defineType({
   name: 'product',
   title: 'Product',
@@ -35,7 +37,15 @@ export const product = defineType({
       name: 'stripeUrl',
       title: 'Stripe Payment URL',
       type: 'url',
-      description: '1. Gå till Stripe (Produkter) och skapa en betallänk. 2. Kopiera länken och klistra in här. (https://dashboard.stripe.com/products)',
+      description: '1. Gå till Stripe (Produkter) och skapa en betallänk. 2. Kopiera länken och klistra in här. (https://dashboard.stripe.com/products) OBS: se till att Stripe INTE står i testläge/sandbox när du skapar länken.',
+      validation: (rule) =>
+        rule.custom((url?: string) => {
+          if (!url) return true
+          if (isStripeTestUrl(url)) {
+            return 'Detta är en Stripe-testlänk (sandbox) - riktiga kunder kan inte betala med den. Stäng av testläget i Stripe och skapa länken på nytt.'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'isPreOrder',
