@@ -156,7 +156,13 @@ export default function ProductList({ products }: ProductListProps) {
                 </div>
             ) : (
                 <div className="text-center py-32 bg-stone-100/50 rounded-sm border border-dashed border-stone-200">
-                    <p className="text-stone-500 font-serif text-xl italic">Inga produkter matchar dina val just nu.</p>
+                    {products.length === 0 ? (
+                        <p className="text-stone-500 font-serif text-xl italic">
+                            Webbutiken fylls på inför säsongen. Hör gärna av dig så hjälper vi dig direkt.
+                        </p>
+                    ) : (
+                        <p className="text-stone-500 font-serif text-xl italic">Inga produkter matchar dina val just nu.</p>
+                    )}
                 </div>
             )}
         </div>

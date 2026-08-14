@@ -17,6 +17,13 @@ import {resolveOpenGraphImage} from '@/sanity/lib/utils'
 import {handleError} from '@/app/client-utils'
 
 /**
+ * Utan detta cachas varje förrenderad sida på Netlifys edge i praktiken för alltid,
+ * så innehåll som ändras i Sanity syns aldrig för besökare förrän nästa deploy.
+ * Gäller alla sidor under denna layout.
+ */
+export const revalidate = 60
+
+/**
  * Generate metadata for the page.
  * Learn more: https://nextjs.org/docs/app/api-reference/functions/generate-metadata#generatemetadata-function
  */
