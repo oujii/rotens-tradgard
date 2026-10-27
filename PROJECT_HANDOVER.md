@@ -1,7 +1,9 @@
 # Rotens Trädgård - Projektöverlämning (AI Handover)
 
-Senast uppdaterad: 2026-02-15  
-Projektrot: `/Users/carl/rotens`
+Senast uppdaterad: 2026-10-27  
+Projektrot: `/Users/carl/klienter/rotens`  
+Hosting: **Netlify** (sajt `rotens`, rotenstradgard.se, bygger `main`). `frontend/vercel.json` är en rest från mallen, används inte.  
+Sanity-projekt: `2zboq97p`, dataset `production`. Studio deployas separat (`npm --workspace studio run deploy`), följer inte med Netlify.
 
 ## 1. Syfte och nuläge
 
@@ -201,6 +203,7 @@ Undvik:
 
 ## 10. Kända risker / teknisk skuld
 
+- **Cache: rör inte `fetchOptions: {revalidate: 60}` i `frontend/sanity/lib/live.ts`.** Utan den cachar `defineLive` Sanity-datan för alltid i produktion och nytt innehåll (event, öppettider) syns inte förrän nästa deploy. `<SanityLive>` räcker inte ensam på Netlify. `export const revalidate` på en route räcker inte heller, den bygger bara om sidan med gammal data. Kontroll: kör `curl -sI https://rotenstradgard.se/ | grep age` två gånger med några sekunders mellanrum. Andra svaret ska ha låg `age` (första kan vara gammalt, det är stale-while-revalidate).
 - Delar av viktig copy är fortfarande hårdkodad (särskilt `/om-oss` och stora block på `/`).
 - Kontaktkategorier är kodade i frontend; om tjänstekort ändras i CMS kan namngivning glida isär.
 - Mobilmeny i header är placeholder (knapp finns, ingen menylogik).
