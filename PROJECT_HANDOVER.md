@@ -3,7 +3,7 @@
 Senast uppdaterad: 2026-10-27  
 Projektrot: `/Users/carl/klienter/rotens`  
 Hosting: **Netlify** (sajt `rotens`, rotenstradgard.se, bygger `main`). `frontend/vercel.json` är en rest från mallen, används inte.  
-Sanity-projekt: `2zboq97p`, dataset `production`. Studio deployas separat (`npm --workspace studio run deploy`), följer inte med Netlify.
+Sanity-projekt: `2zboq97p`, dataset `production`. Studio ligger på rotens.sanity.studio och deployas separat, följer inte med Netlify: `cd studio && SANITY_STUDIO_STUDIO_HOST=rotens npx sanity deploy --yes`. Deploya alltid från committad kod (Studio-ändringar låg ocommittade mars–okt 2026).
 
 ## 1. Syfte och nuläge
 
