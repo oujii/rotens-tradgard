@@ -2,6 +2,8 @@ import { BasketIcon } from '@sanity/icons'
 import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list'
 import { defineField, defineType } from 'sanity'
 
+import { isStripeTestUrl } from '../../lib/stripe'
+
 export const product = defineType({
   name: 'product',
   title: 'Product',
@@ -35,7 +37,15 @@ export const product = defineType({
       name: 'stripeUrl',
       title: 'Stripe Payment URL',
       type: 'url',
-      description: '1. Gå till Stripe (Produkter) och skapa en betallänk. 2. Kopiera länken och klistra in här. (https://dashboard.stripe.com/products)',
+      description: '1. Gå till Stripe (Produkter) och skapa en betallänk. 2. Kopiera länken och klistra in här. (https://dashboard.stripe.com/products) OBS: se till att Stripe INTE står i testläge/sandbox när du skapar länken.',
+      validation: (rule) =>
+        rule.custom((url?: string) => {
+          if (!url) return true
+          if (isStripeTestUrl(url)) {
+            return 'Detta är en Stripe-testlänk (sandbox) - riktiga kunder kan inte betala med den. Stäng av testläget i Stripe och skapa länken på nytt.'
+          }
+          return true
+        }),
     }),
     defineField({
       name: 'isPreOrder',
@@ -46,9 +56,9 @@ export const product = defineType({
     }),
     defineField({
       name: 'bestBefore',
-      title: 'Bäst före',
+      title: 'Dölj i butiken efter (bäst före)',
       type: 'date',
-      description: 'Produkten döljs automatiskt i webbutiken efter detta datum. Lämna tomt för att alltid visa produkten.',
+      description: 'VIKTIGT: när detta datum passerat försvinner produkten helt från webbutiken. Lämna tomt för produkter som alltid ska synas, t.ex. presentkort och buketter.',
       options: {
         dateFormat: 'YYYY-MM-DD',
       },
@@ -70,11 +80,20 @@ export const product = defineType({
       price: 'price',
       media: 'image',
       isPreOrder: 'isPreOrder',
+      bestBefore: 'bestBefore',
     },
-    prepare({ title, price, media, isPreOrder }) {
+    prepare({ title, price, media, isPreOrder, bestBefore }) {
+      // Gör det synligt direkt i listan att en produkt inte längre visas i butiken.
+      const hidden = bestBefore && new Date(`${bestBefore}T23:59:59Z`) < new Date()
+      const parts = [
+        hidden ? `DOLD I BUTIKEN sedan ${bestBefore}` : null,
+        `${price} kr`,
+        isPreOrder ? '(Förboka)' : null,
+      ].filter(Boolean)
+
       return {
-        title,
-        subtitle: `${price} kr ${isPreOrder ? '(Förboka)' : ''}`,
+        title: hidden ? `[DOLD] ${title}` : title,
+        subtitle: parts.join(' · '),
         media,
       }
     },

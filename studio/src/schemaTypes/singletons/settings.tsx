@@ -28,20 +28,27 @@ export const settings = defineType({
     // OPENING HOURS
     defineField({
       name: 'openingHours',
-      title: 'Opening Hours',
+      title: 'Öppettider',
       type: 'object',
+      fieldsets: [
+        {
+          name: 'legacy',
+          title: 'Gamla fasta fält (används inte när fritexten ovan är ifylld)',
+          options: { collapsible: true, collapsed: true },
+        },
+      ],
       fields: [
         defineField({
           name: 'customText',
-          title: 'Öppettider (fri text)',
+          title: 'Öppettider - ÄNDRA HÄR',
           type: 'text',
           rows: 4,
           description:
-            'Om detta fält är ifyllt används det på webbplatsen i stället för fälten nedan. Skriv en rad per öppettid i formatet "Dag: Tid", t.ex. "Onsdag-Söndag: 10 - 17".',
+            'Det här är fältet som styr öppettiderna på hela webbplatsen. En rad per öppettid i formatet "Dag: Tid", t.ex. "Onsdag - Lördag: 10 - 17". Ändringen syns på sajten inom någon minut.',
         }),
-        defineField({ name: 'weekdays', title: 'Weekdays', type: 'string', initialValue: '10 - 18' }),
-        defineField({ name: 'saturday', title: 'Saturday', type: 'string', initialValue: '10 - 15' }),
-        defineField({ name: 'sunday', title: 'Sunday', type: 'string', initialValue: 'Stängt' }),
+        defineField({ name: 'weekdays', title: 'Vardagar (endast tid, t.ex. "10 - 18")', type: 'string', fieldset: 'legacy', initialValue: '10 - 18' }),
+        defineField({ name: 'saturday', title: 'Lördag (endast tid)', type: 'string', fieldset: 'legacy', initialValue: '10 - 15' }),
+        defineField({ name: 'sunday', title: 'Söndag (endast tid)', type: 'string', fieldset: 'legacy', initialValue: 'Stängt' }),
       ]
     }),
 

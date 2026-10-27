@@ -13,4 +13,8 @@ export const {sanityFetch, SanityLive} = defineLive({
   serverToken: token,
   // Required for stand-alone live previews, the token is only shared to the browser if it's a valid Next.js Draft Mode session
   browserToken: token,
+  // Utan detta cachas Sanity-datan för alltid i produktion och uppdateras bara när en
+  // besökare råkar ha sajten öppen just när något publiceras (<SanityLive>). Med 60 s
+  // syns publicerat innehåll inom ungefär en minut oavsett trafik.
+  fetchOptions: {revalidate: 60},
 })
